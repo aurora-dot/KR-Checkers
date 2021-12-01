@@ -1,6 +1,6 @@
-from src.player import Player
+from .player import Player
 
 
-class Human(Player):
+class Ai(Player):
     def __init__(self) -> None:
         super().__init__()

@@ -8,8 +8,8 @@ python-versions = ">=3.6"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "3.9.6"
-content-hash = "c08336fde1cb61dcc66e31342f1459ddf361a805aea26ea1979f57300b455634"
+python-versions = "^3.9"
+content-hash = "483c6136692b213181d4bd07fdfd47dc8482cb1c15a567a8b745b93eff414877"
 
 [metadata.files]
 pygame = [

@@ -1,4 +1,4 @@
-from src.piece import Piece
+from .piece import Piece
 
 
 class Board:

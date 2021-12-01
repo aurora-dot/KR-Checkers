@@ -1,5 +1,5 @@
 import pygame
-from checkers import Checkers
+from .game import Game
 from sys import exit
 
 FPS = 60
@@ -9,7 +9,7 @@ WINDOW = pygame.display.set_mode((800, 800))
 def main() -> None:
     playing = True
     clock = pygame.time.Clock()
-    game = Checkers()
+    game = Game()
 
     while playing:
         clock.tick(FPS)
@@ -19,6 +19,3 @@ def main() -> None:
                 pygame.quit()
                 exit()
 
-
-if __name__ == "__main__":
-    main()

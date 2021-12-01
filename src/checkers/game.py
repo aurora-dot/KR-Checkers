@@ -1,7 +1,7 @@
 import pygame
-from src.board import Board
+from .board import Board
 
 
-class Checkers:
+class Game:
     def __init__(self) -> None:
         pass
