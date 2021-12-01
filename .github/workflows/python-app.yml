@@ -32,4 +32,4 @@ jobs:
           poetry run pre-commit run --all-files
       - name: Test code
         run: |
-          poetry pytest
+          poetry run pytest
