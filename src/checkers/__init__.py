@@ -10,6 +10,7 @@ def main() -> None:
     playing = True
     clock = pygame.time.Clock()
     game = Game()
+    game
 
     while playing:
         clock.tick(FPS)
@@ -18,4 +19,3 @@ def main() -> None:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-

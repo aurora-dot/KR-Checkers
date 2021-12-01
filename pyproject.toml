@@ -12,6 +12,10 @@ python = "^3.9"
 pygame = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
+pre-commit = "2.13.0"
+flake8 = "3.9.2"
+black = "21.6b0"
+pytest = "6.2.4"
 
 [tool.poetry.scripts]
 PlayCheckers = 'checkers:main'
@@ -19,3 +23,6 @@ PlayCheckers = 'checkers:main'
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
