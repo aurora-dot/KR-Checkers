@@ -10,7 +10,6 @@ def main() -> None:
     playing = True
     clock = pygame.time.Clock()
     game = Game()
-    game
 
     while playing:
         clock.tick(FPS)
