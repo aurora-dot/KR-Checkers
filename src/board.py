@@ -31,7 +31,6 @@ class Board:
                 else:
                     self.board[row].append(0)
                     self.pieces[row].append(None)
-    
-    def get_piece(self, row, col):
-        return self.pieces[row][col]
 
+    def get_piece(self, row: int, col: int) -> Piece:
+        return self.pieces[row][col]

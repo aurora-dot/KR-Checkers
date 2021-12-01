@@ -5,7 +5,8 @@ from sys import exit
 FPS = 60
 WINDOW = pygame.display.set_mode((800, 800))
 
-def main():
+
+def main() -> None:
     playing = True
     clock = pygame.time.Clock()
     game = Checkers()
@@ -18,6 +19,6 @@ def main():
                 pygame.quit()
                 exit()
 
+
 if __name__ == "__main__":
     main()
-
