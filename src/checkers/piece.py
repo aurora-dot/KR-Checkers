@@ -10,8 +10,5 @@ class Piece:
     def make_king(self) -> None:
         self.king = True
 
-    def get_colour(self) -> str:
-        return self.colour
-
     def __str__(self) -> str:
         return self.colour

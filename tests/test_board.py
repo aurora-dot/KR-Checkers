@@ -36,13 +36,13 @@ class MyTestCase(unittest.TestCase):
             for col in range(8):
                 if row < 3:
                     if board.board[row][col] == 1:
-                        c = board.pieces[row][col].get_colour()
+                        c = board.pieces[row][col].colour
                         self.assertEqual(c, "W")
                     else:
                         self.assertEqual(board.pieces[row][col], None)
                 if row > 4:
                     if board.board[row][col] == 1:
-                        c = board.pieces[row][col].get_colour()
+                        c = board.pieces[row][col].colour
                         self.assertEqual(c, "R")
                     else:
                         self.assertEqual(board.pieces[row][col], None)
