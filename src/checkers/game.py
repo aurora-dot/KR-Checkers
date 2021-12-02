@@ -19,10 +19,12 @@ class Game:
     def start(self, starting_turn) -> None:
         pass
 
-    def select_piece(self, row, col):
+    def select_piece(self, tile_location):
+        row, col = tile_location
         pass
 
-    def place_piece(self, row, col):
+    def place_piece(self, tile_location):
+        row, col = tile_location
         pass
 
     def finished(self) -> int or None:

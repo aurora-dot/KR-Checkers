@@ -20,6 +20,8 @@ Please make sure you have these installed:
 Have fun!
 
 ## Todo
+Moving a piece while selection and move are in two separate steps.
+
 - [ ] Movement
     - [ ] King
     - [ ] Auto capture

@@ -81,9 +81,7 @@ class Gui:
     @staticmethod
     def get_mouse_row_col(pos):
         x, y = pos
-        row = y // 100
-        col = x // 100
-        return row, col
+        return (y // 100, x // 100)
 
     @staticmethod
     def draw_circle(surface, x, y, radius, colour):
