@@ -1,10 +1,11 @@
 from .game import Game
 import pygame
+from pygame import gfxdraw
 
 
 class Gui:
     colours = {
-        "R": (220, 50, 50),
+        "R": (255, 85, 85),
         "W": (248, 248, 242),
         "black": (40, 42, 54),
         "red": (255, 85, 85),
@@ -37,26 +38,28 @@ class Gui:
             for piece in row:
                 if piece:
                     # Piece radius
-                    radius = (100 // 2) - 15
+                    radius = (100 // 2) - 14
 
                     # Piece position
                     piece_x = (100 * piece.col) + (100 // 2)
                     piece_y = (100 * piece.row) + (100 // 2)
 
                     # Pink circle outline
-                    pygame.draw.circle(
+                    self.draw_circle(
                         self.window,
+                        piece_x,
+                        piece_y,
+                        radius + 4,
                         self.colours["pink"],
-                        (piece_x, piece_y),
-                        radius + 2,
                     )
 
                     # Piece center colour
-                    pygame.draw.circle(
+                    self.draw_circle(
                         self.window,
-                        self.colours[piece.colour],
-                        (piece_x, piece_y),
+                        piece_x,
+                        piece_y,
                         radius,
+                        self.colours[piece.colour],
                     )
 
                     if piece.king:
@@ -73,3 +76,8 @@ class Gui:
         # Create button to show help menu
 
         # Log text of what happens maybe?
+
+    @staticmethod
+    def draw_circle(surface, x, y, radius, colour):
+        gfxdraw.aacircle(surface, x, y, radius, colour)
+        gfxdraw.filled_circle(surface, x, y, radius, colour)
