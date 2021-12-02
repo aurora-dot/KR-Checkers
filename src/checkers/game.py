@@ -12,6 +12,8 @@ colours = {
 
 
 class Game:
+    valid_moves = {}
+
     def __init__(self, window) -> None:
         self.window = window
         self.board = Board()
@@ -60,5 +62,11 @@ class Game:
                         radius,
                     )
 
+                    if piece.king:
+                        print("TODO: Add king logo in center")
+
     def draw_valid_moves(self) -> None:
+        pass
+
+    def draw_side_bar(self) -> None:
         pass

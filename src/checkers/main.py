@@ -3,7 +3,7 @@ from sys import exit
 from .game import Game
 
 FPS = 60
-WINDOW = pygame.display.set_mode((800, 800))
+WINDOW = pygame.display.set_mode((1000, 800))
 
 
 def main() -> None:
