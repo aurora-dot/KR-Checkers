@@ -34,15 +34,16 @@ class Gui:
                 )
 
     def draw_pieces(self) -> None:
-        for row in self.checkers.board.pieces:
-            for piece in row:
+        for row in range(8):
+            for col in range(8):
+                piece = self.checkers.board.pieces[row][col]
                 if piece:
                     # Piece radius
                     radius = (100 // 2) - 14
 
                     # Piece position
-                    piece_x = (100 * piece.col) + (100 // 2)
-                    piece_y = (100 * piece.row) + (100 // 2)
+                    piece_x = (100 * col) + (100 // 2)
+                    piece_y = (100 * row) + (100 // 2)
 
                     # Pink circle outline
                     self.draw_circle(
@@ -76,6 +77,13 @@ class Gui:
         # Create button to show help menu
 
         # Log text of what happens maybe?
+
+    @staticmethod
+    def get_mouse_row_col(pos):
+        x, y = pos
+        row = y // 100
+        col = x // 100
+        return row, col
 
     @staticmethod
     def draw_circle(surface, x, y, radius, colour):

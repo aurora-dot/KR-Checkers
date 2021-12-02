@@ -6,10 +6,10 @@ from random import choice as r_choice
 
 class Game:
     valid_moves = {}
+    selected_piece = None
 
     def __init__(self) -> None:
         self.turn = r_choice([0, 1])
-
         self.board = Board()
         self.human = Human(0)
         self.ai = Ai(1)
@@ -17,6 +17,12 @@ class Game:
         self.start(self.turn)
 
     def start(self, starting_turn) -> None:
+        pass
+
+    def select_piece(self, row, col):
+        pass
+
+    def place_piece(self, row, col):
         pass
 
     def finished(self) -> int or None:

@@ -18,10 +18,10 @@ class Board:
             for col in range(8):
                 if (row + 1) % 2 == col % 2:
                     if row < 3:
-                        self.pieces[row].append(Piece(0, row, col))
+                        self.pieces[row].append(Piece(0))
                         self.white_remaining += 1
                     elif row > 4:
-                        self.pieces[row].append(Piece(1, row, col))
+                        self.pieces[row].append(Piece(1))
                         self.red_remaining += 1
                     else:
                         self.pieces[row].append(None)
@@ -34,3 +34,11 @@ class Board:
 
     def get_piece(self, row: int, col: int) -> Piece:
         return self.pieces[row][col]
+
+    def move_piece(self, piece_location, destination_location):
+        piece_row, piece_col = piece_location
+        destination_row, destination_col = destination_location
+
+        piece = self.pieces[piece_row][piece_col]
+        self.pieces[destination_row][destination_col] = piece
+        self.pieces[piece_row][piece_col] = None

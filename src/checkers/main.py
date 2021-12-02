@@ -21,6 +21,21 @@ def main() -> None:
                 pygame.quit()
                 exit()
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+
+                if pos[0] <= 800:
+                    row, col = gui.get_mouse_row_col(pos)
+                    print(row, col)
+
+                    if not gui.checkers.selected_piece:
+                        gui.checkers.select_piece(row, col)
+                    else:
+                        gui.checkers.place_piece(row, col)
+
+                elif pos[0] > 800:
+                    print("Side menu")
+
         gui.update_window()
 
 
