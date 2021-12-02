@@ -4,7 +4,7 @@ from .gui import Gui
 
 
 def main() -> None:
-    fps = 60
+    fps = 27
     res = (1000, 800)
     window = pygame.display.set_mode(res)
     pygame.display.set_caption("K&R: Checkers!")
@@ -40,11 +40,10 @@ def main() -> None:
                     else:
                         gui.checkers.place_piece(tile_location)
 
-                    gui.update_window()
-
                 elif pos[0] > 800:
                     print("Side menu")
-                    gui.update_window()
+
+        gui.update_window()
 
 
 main()
