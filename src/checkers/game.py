@@ -1,5 +1,7 @@
 import pygame
+from .ai import Ai
 from .board import Board
+from .human import Human
 from random import choice as r_choice
 
 colours = {
@@ -16,13 +18,26 @@ class Game:
 
     def __init__(self, window) -> None:
         self.window = window
+        self.turn = r_choice([0, 1])
+
         self.board = Board()
-        self.turn = r_choice(["R", "W"])
+        self.human = Human(0)
+        self.ai = Ai(1)
+
+        self.start(self.turn)
+
+    # --- Game Logic --- #
+
+    def start(self, starting_turn) -> None:
+        pass
+
+    # --- UI --- #
 
     def update_window(self) -> None:
         self.draw_board()
         self.draw_pieces()
         self.draw_valid_moves()
+        self.draw_side_bar()
         pygame.display.update()
 
     def draw_board(self) -> None:
@@ -69,4 +84,10 @@ class Game:
         pass
 
     def draw_side_bar(self) -> None:
-        pass
+        # Make side bar white
+        rectangle_dimensions = (800, 0, 200, 800)
+        pygame.draw.rect(self.window, colours["W"], rectangle_dimensions)
+
+        # Create button to show help menu
+
+        # Log text of what happens maybe?

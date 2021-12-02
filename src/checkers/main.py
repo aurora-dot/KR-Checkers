@@ -2,17 +2,19 @@ import pygame
 from sys import exit
 from .game import Game
 
-FPS = 60
-WINDOW = pygame.display.set_mode((1000, 800))
-
 
 def main() -> None:
+    fps = 60
+    res = (1000, 800)
+    window = pygame.display.set_mode(res)
+    pygame.display.set_caption("K&R: Checkers!")
+
     playing = True
     clock = pygame.time.Clock()
-    checkers = Game(WINDOW)
+    checkers = Game(window)
 
     while playing:
-        clock.tick(FPS)
+        clock.tick(fps)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
