@@ -18,3 +18,11 @@ class Game:
 
     def start(self, starting_turn) -> None:
         pass
+
+    def finished(self) -> int or None:
+        if self.board.red_remaining <= 0:
+            return 0
+        elif self.board.white_remaining <= 0:
+            return 1
+        else:
+            return None
