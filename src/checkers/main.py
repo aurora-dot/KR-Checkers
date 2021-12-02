@@ -1,6 +1,6 @@
 import pygame
 from sys import exit
-from .game import Game
+from .gui import Gui
 
 
 def main() -> None:
@@ -11,7 +11,7 @@ def main() -> None:
 
     playing = True
     clock = pygame.time.Clock()
-    checkers = Game(window)
+    gui = Gui(window)
 
     while playing:
         clock.tick(fps)
@@ -21,7 +21,7 @@ def main() -> None:
                 pygame.quit()
                 exit()
 
-        checkers.update_window()
+        gui.update_window()
 
 
 main()
