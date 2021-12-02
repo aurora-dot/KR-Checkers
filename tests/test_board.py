@@ -4,8 +4,10 @@ from src.checkers.board import Board
 
 class MyTestCase(unittest.TestCase):
     def test_board_setup(self):
+        # Init board
         board = Board()
 
+        # Prints board
         for row in range(len(board.board)):
             for col in range(len(board.board[0])):
                 if board.pieces[row][col]:
