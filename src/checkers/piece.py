@@ -3,7 +3,7 @@ class Piece:
 
     def __init__(self, type: int) -> None:
         self.type = type
-        self.colour = "W" if type == 0 else "R"
+        self.colour = "R" if type == 0 else "W"
 
     def make_king(self) -> None:
         self.king = True

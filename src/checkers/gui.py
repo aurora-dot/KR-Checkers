@@ -79,7 +79,7 @@ class Gui:
         # Log text of what happens maybe?
 
     @staticmethod
-    def get_mouse_row_col(pos):
+    def convert_x_y_to_row_col(pos):
         x, y = pos
         return (y // 100, x // 100)
 
