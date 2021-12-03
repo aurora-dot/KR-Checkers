@@ -10,6 +10,7 @@ class Gui:
         "black": (40, 42, 54),
         "red": (255, 85, 85),
         "pink": (255, 121, 198),
+        "orange": (255, 184, 108),
     }
 
     def __init__(self, window) -> None:
@@ -64,7 +65,14 @@ class Gui:
                     )
 
                     if piece.king:
-                        print("TODO: Add king logo in center")
+                        # Piece center colour
+                        self.draw_circle(
+                            self.window,
+                            piece_x,
+                            piece_y,
+                            radius - 20,
+                            self.colours["yellow"],
+                        )
 
     def draw_valid_moves(self) -> None:
         pass
