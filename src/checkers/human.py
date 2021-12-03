@@ -32,6 +32,10 @@ class Human(Player):
                     self.board.move_piece(self.selected_piece[0:2], (row, col))
                     self.selected_piece = None
 
+            # Can only move bottom up as a rule (top down for ai).
+            # When reaches the top they will turn into a king
+            #   so they can move back and forth.
+
             else:
                 print("placed, rahh")
                 self.board.move_piece(self.selected_piece[0:2], (row, col))
