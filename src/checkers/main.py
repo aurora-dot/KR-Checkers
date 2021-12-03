@@ -27,6 +27,7 @@ def main() -> None:
                 pos = pygame.mouse.get_pos()
 
                 if pos[0] <= 800:
+                    print("bruh")
                     gui.checkers.take_turn(gui.convert_x_y_to_row_col(pos))
                 elif pos[0] > 800:
                     print("Side menu")
