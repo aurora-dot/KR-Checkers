@@ -25,10 +25,11 @@ def main() -> None:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print("Clicked")
                 pos = pygame.mouse.get_pos()
-                if pos[0] > 800:
-                    print("Side menu")
-                else:
+
+                if pos[0] <= 800:
                     gui.checkers.take_turn(gui.convert_x_y_to_row_col(pos))
+                elif pos[0] > 800:
+                    print("Side menu")
 
         gui.update_window()
 
