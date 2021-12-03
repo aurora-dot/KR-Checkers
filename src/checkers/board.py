@@ -19,7 +19,7 @@ class Board:
                 if (row + 1) % 2 == col % 2:
                     if row < 3:
                         self.pieces[row].append(Piece(1))
-                        self.pieces[row][-1].king = True
+                        # self.pieces[row][-1].king = True
                         self.white_remaining += 1
                     elif row > 4:
                         self.pieces[row].append(Piece(0))
