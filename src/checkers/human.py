@@ -15,6 +15,7 @@ class Human(Player):
             and self.board.pieces[row][col].type == 0
         ):
             self.selected_piece = (row, col, self.board.pieces[row][col])
+            print(self.selected_piece)
             print("Selected")
 
     def place_piece(self, tile_location):
@@ -28,8 +29,10 @@ class Human(Player):
 
                 elif self.board.pieces[row][col] != 0:
                     print("good, placed")
+                    self.board.move_piece(self.selected_piece[0:2], (row, col))
                     self.selected_piece = None
 
             else:
                 print("placed, rahh")
+                self.board.move_piece(self.selected_piece[0:2], (row, col))
                 self.selected_piece = None

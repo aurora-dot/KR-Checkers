@@ -23,6 +23,7 @@ def main() -> None:
                 exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                print("Clicked")
                 pos = pygame.mouse.get_pos()
                 if pos[0] > 800:
                     print("Side menu")
