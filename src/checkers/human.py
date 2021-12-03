@@ -52,6 +52,7 @@ class Human(Player):
                         self.selected_piece = None
 
             # Can only move bottom up as a rule (top down for ai).
+            # # TODO Above, fix this cos it broke
             # When reaches the top they will turn into a king
             #   so they can move back and forth.
 
