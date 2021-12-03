@@ -4,6 +4,8 @@ from .gui import Gui
 
 
 def main() -> None:
+    pygame.init()
+
     fps = 27
     res = (1000, 800)
     window = pygame.display.set_mode(res)

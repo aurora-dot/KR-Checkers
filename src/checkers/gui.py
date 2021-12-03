@@ -1,6 +1,7 @@
 from .game import Game
 import pygame
 from pygame import gfxdraw
+import os
 
 
 class Gui:
@@ -70,8 +71,17 @@ class Gui:
                             self.window,
                             piece_x,
                             piece_y,
-                            radius - 20,
-                            self.colours["yellow"],
+                            radius - 17,
+                            self.colours["black"],
+                        )
+
+                        f = pygame.font.Font(
+                            os.path.dirname(__file__) + "/resources/font.ttf",
+                            32,
+                        )
+                        self.window.blit(
+                            f.render("K", True, self.colours["orange"]),
+                            (piece_x - 10, piece_y - 20),
                         )
 
     def draw_valid_moves(self) -> None:
