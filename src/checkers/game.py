@@ -7,6 +7,7 @@ from .human import Human
 
 class Game:
     valid_moves = {}
+    selected_piece = None
 
     def __init__(self) -> None:
         self.turn = 0  # r_choice([0, 1])
@@ -19,7 +20,7 @@ class Game:
 
     def take_turn(self, tile_location):
         if self.turn == 0:
-            if not self.human.selected_piece:
+            if not self.selected_piece:
                 self.human.select_piece(tile_location)
 
             else:
