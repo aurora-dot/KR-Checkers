@@ -6,10 +6,12 @@ from .human import Human
 
 
 class Game:
-    valid_moves = {}
-    selected_piece = None
-
     def __init__(self) -> None:
+        self.start_new_game()
+
+    def start_new_game(self):
+        self.valid_moves = {}
+        self.selected_piece = None
         self.turn = 0  # r_choice([0, 1])
         self.board = Board()
         self.human = Human(0, self.board, self)
@@ -42,7 +44,7 @@ class Game:
         ################################################
 
     def all_valid_moves(self):
-        print("bruh sound #2")
+        print("bruh sound #3")
 
     def finished(self) -> int or None:
         if self.board.red_remaining <= 0:
