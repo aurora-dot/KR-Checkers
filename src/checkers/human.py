@@ -16,7 +16,9 @@ class Human(Player):
         ):
             # check that there are possible valid moves
             #   e.g., all row in line ahead is full
-            # display possible valid moves
+            # Make piece active
+            # display possible valid moves for piece
+            #
 
             self.selected_piece = (row, col, self.board.pieces[row][col])
             print(self.selected_piece)

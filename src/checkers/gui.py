@@ -47,14 +47,28 @@ class Gui:
                     piece_x = (100 * col) + (100 // 2)
                     piece_y = (100 * row) + (100 // 2)
 
-                    # Pink circle outline
-                    self.draw_circle(
-                        self.window,
-                        piece_x,
-                        piece_y,
-                        radius + 4,
-                        self.colours["pink"],
-                    )
+                    if (
+                        not self.checkers.human.selected_piece
+                        or (row, col)
+                        != self.checkers.human.selected_piece[0:2]
+                    ):
+                        # Pink circle outline
+                        self.draw_circle(
+                            self.window,
+                            piece_x,
+                            piece_y,
+                            radius + 4,
+                            self.colours["pink"],
+                        )
+                    elif (row, col) == self.checkers.human.selected_piece[0:2]:
+                        # Pink circle outline
+                        self.draw_circle(
+                            self.window,
+                            piece_x,
+                            piece_y,
+                            radius + 4,
+                            self.colours["orange"],
+                        )
 
                     # Piece center colour
                     self.draw_circle(
