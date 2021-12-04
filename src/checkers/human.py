@@ -4,8 +4,8 @@ from .player import Player
 class Human(Player):
     selected_piece = None
 
-    def __init__(self, side, board) -> None:
-        super().__init__(side, board)
+    def __init__(self, side, board, game) -> None:
+        super().__init__(side, board, game)
 
     def select_piece(self, tile_location):
         row, col = tile_location

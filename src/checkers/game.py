@@ -11,8 +11,8 @@ class Game:
     def __init__(self) -> None:
         self.turn = 0  # r_choice([0, 1])
         self.board = Board()
-        self.human = Human(0, self.board)
-        self.ai = Ai(1, self.board)
+        self.human = Human(0, self.board, self)
+        self.ai = Ai(1, self.board, self)
 
     def start(self, starting_turn) -> None:
         pass
@@ -25,19 +25,22 @@ class Game:
             else:
                 self.human.place_piece(tile_location)
 
-    def validate_move(self):
-        pass
+    def validate_move(self, move):
+        print("bruh sound #2")
 
-    ################################################
-    # Validate move flow                           #
-    ################################################
-    # Human class stores the valid moves and piece #
-    # Person clicks piece,                         #
-    #   Human class checks if the selected piece   #
-    #   has valid moves                            #
-    # Person clicks tile                           #
-    #   Human class moves the piece to the tile    #
-    ################################################
+        ################################################
+        # Validate move flow                           #
+        ################################################
+        # Human class stores the valid moves and piece #
+        # Person clicks piece,                         #
+        #   Human class checks if the selected piece   #
+        #   has valid moves                            #
+        # Person clicks tile                           #
+        #   Human class moves the piece to the tile    #
+        ################################################
+
+    def all_valid_moves(self):
+        print("bruh sound #2")
 
     def finished(self) -> int or None:
         if self.board.red_remaining <= 0:
