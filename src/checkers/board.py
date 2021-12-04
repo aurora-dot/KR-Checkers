@@ -33,9 +33,6 @@ class Board:
                     self.board[row].append(0)
                     self.pieces[row].append(None)
 
-    def get_piece(self, row: int, col: int) -> Piece:
-        return self.pieces[row][col]
-
     def move_piece(self, piece_location, destination_location):
         piece_row, piece_col = piece_location
         destination_row, destination_col = destination_location

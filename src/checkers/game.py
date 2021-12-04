@@ -28,6 +28,17 @@ class Game:
     def validate_move(self):
         pass
 
+    ################################################
+    # Validate move flow                           #
+    ################################################
+    # Human class stores the valid moves and piece #
+    # Person clicks piece,                         #
+    #   Human class checks if the selected piece   #
+    #   has valid moves                            #
+    # Person clicks tile                           #
+    #   Human class moves the piece to the tile    #
+    ################################################
+
     def finished(self) -> int or None:
         if self.board.red_remaining <= 0:
             return 0
