@@ -22,7 +22,8 @@ class Game:
         if self.turn == 0:
             if not self.selected_piece:
                 self.human.select_piece(tile_location)
-
+            elif self.selected_piece[0:2] == tile_location:
+                self.selected_piece = None
             else:
                 self.human.place_piece(tile_location)
 
