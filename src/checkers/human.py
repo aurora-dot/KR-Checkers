@@ -18,17 +18,22 @@ class Human(Player):
             #
 
             self.game.selected_piece = (row, col, self.board.pieces[row][col])
+
+            to, king_to = self.game.all_valid_moves_for_piece(self.game.selected_piece[0:2])
             self.game.selected_piece[
                 2
-            ].moves = self.game.all_valid_moves_for_piece(
-                self.game.selected_piece[0:2]
-            )
+            ].moves = to
+            self.game.selected_piece[
+                2
+            ].king_moves = king_to
 
     def place_piece(self, tile_location):
+            
+
         if tile_location in self.game.selected_piece[2].moves:
             self.board.move_piece(self.game.selected_piece[0:2], tile_location)
-            # if made_king:
-            #     self.game.selected_piece[2].king = True
+            if tile_location in self.game.selected_piece[2].king_moves:
+                self.game.selected_piece[2].king = True
 
             # Check for jumps here
 

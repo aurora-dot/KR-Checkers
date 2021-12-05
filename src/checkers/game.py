@@ -88,7 +88,10 @@ class Game:
 
             if not piece.king:
                 if (piece.type == 0 and row < og_row) or (piece.type == 1 and row > og_row):
-                    return True, False, (row, col)
+                    if (piece.type == 0 and row == 0) or (piece.type == 1 and row == 7):
+                        return True, True, (row, col)
+                    else:
+                        return True, False, (row, col)
                 else:
                     return False, False, (row, col)
             else:
@@ -100,6 +103,7 @@ class Game:
 
     def all_valid_moves_for_piece(self, piece_location):
         valid_moves = []
+        king_creation_moves = []
         row, col = piece_location
         for i in range(row - 2, row + 3, 1):
             for j in range(col - 2, col + 3, 1):
@@ -144,8 +148,10 @@ class Game:
                     else:
                         print("h : ", to)
                         valid_moves.append(to)
+                        if made_king:
+                            king_creation_moves.append(to)
 
-        return valid_moves
+        return valid_moves, king_creation_moves
 
     def finished(self) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
