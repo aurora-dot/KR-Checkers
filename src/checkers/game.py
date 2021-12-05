@@ -2,89 +2,81 @@ from .ai import Ai
 from .board import Board
 from .human import Human
 
-# from random import choice as r_choice
-
 
 class Game:
     def __init__(self) -> None:
         self.start_new_game()
 
     def start_new_game(self):
-        self.valid_moves = {}
         self.selected_piece = None
         self.turn = 0
         self.board = Board()
         self.human = Human(0, self.board, self)
         self.ai = Ai(1, self.board, self)
-
-    def start(self, starting_turn) -> None:
-        pass
+        self.players = [self.human, self.ai]
 
     def take_turn(self, tile_location):
-        if self.turn == 0:
-            if not self.selected_piece:
-                self.human.select_piece(tile_location)
-            elif self.selected_piece[0:2] == tile_location:
-                self.selected_piece = None
-            else:
-                self.human.place_piece(tile_location)
-        elif self.turn == 1:
-            pass
+        if not self.selected_piece:
+            self.players[self.turn].select_piece(tile_location)
+        elif self.selected_piece[0:2] == tile_location:
+            self.selected_piece = None
+        else:
+            self.players[self.turn].place_piece(tile_location)
+            # self.turn = 1 if self.turn == 0 else 0
 
     def calculate_heuristic(self):
-        pass
+        total, human, ai = (0, 0, 0)
+        print(total, human, ai)
 
-    def validate_move(self, tile_location):
+    def validate_move(self, piece, piece_location, tile_location):
         row, col = tile_location
 
-        if self.board.board[row][col] == 1:
+        if row < 8 and col < 8 and self.board.board[row][col] == 1:
             if (
-                self.selected_piece[0:2] == (row + 1, col + 1)
-                or self.selected_piece[0:2] == (row + 1, col - 1)
-                or self.selected_piece[0:2] == (row - 1, col + 1)
-                or self.selected_piece[0:2] == (row - 1, col - 1)
+                piece_location == (row + 1, col + 1)
+                or piece_location == (row + 1, col - 1)
+                or piece_location == (row - 1, col + 1)
+                or piece_location == (row - 1, col - 1)
             ):
                 if not self.board.pieces[row][col] or (
                     self.board.pieces[row][col]
-                    and self.board.pieces[row][col].type
-                    != self.selected_piece[2].type
+                    and self.board.pieces[row][col].type != piece.type
                 ):
-                    if not self.selected_piece[2].king:
+                    if not piece.king:
                         if (
-                            self.selected_piece[2].type == 0
-                            and row < self.selected_piece[0]
+                            piece.type == 0 and row < self.selected_piece[0]
                         ) or (
-                            self.selected_piece[2].type == 1
-                            and row > self.selected_piece[0]
+                            piece.type == 1 and row > self.selected_piece[0]
                         ):
-                            if (
-                                self.selected_piece[2].type == 0 and row == 0
-                            ) or (
-                                self.selected_piece[2].type == 1 and row == 7
+                            if (piece.type == 0 and row == 0) or (
+                                piece.type == 1 and row == 7
                             ):
-                                self.selected_piece[2].king = True
+                                return True, True
 
-                            return True
+                            return True, False
                     else:
-                        return True
+                        return True, False
 
-        return False
+        return False, False
 
-    ################################################
-    # Validate move flow                           #
-    ################################################
-    # Human class stores the valid moves and piece #
-    # Person clicks piece,                         #
-    #   Human class checks if the selected piece   #
-    #   has valid moves                            #
-    # Person clicks tile                           #
-    #   Human class moves the piece to the tile    #
-    ################################################
+    def all_valid_moves_for_piece(self, piece_location):
+        valid_moves = []
+        row, col = piece_location
+        print((row, col))
+        for i in range(row - 1, row + 2, 1):
+            for j in range(col - 1, col + 2, 1):
+                print(i, j)
+                is_valid, made_king = self.validate_move(
+                    self.selected_piece[2], self.selected_piece[0:2], (i, j)
+                )
+                if is_valid:
+                    valid_moves.append((i, j))
 
-    def all_valid_moves(self):
-        pass
+        return valid_moves
 
     def finished(self) -> int or None:
+        # if opponent has no legal moves or no remaining pieces they have won,
+        # draw if neither side has a legal move
         if self.board.red_remaining <= 0:
             return 0
         elif self.board.white_remaining <= 0:

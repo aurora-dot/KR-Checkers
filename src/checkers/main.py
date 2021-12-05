@@ -19,18 +19,21 @@ def main() -> None:
     while playing:
         clock.tick(fps)
 
+        if gui.checkers.turn == gui.checkers.players[1].type:
+            gui.checkers.take_turn(None)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
-            if gui.checkers.turn == 1:
-                gui.checkers.take_turn(None)
-
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
 
-                if pos[0] <= 800 and gui.checkers.turn == 0:
+                if (
+                    pos[0] <= 800
+                    and gui.checkers.turn == gui.checkers.players[0].type
+                ):
                     gui.checkers.take_turn(gui.convert_x_y_to_row_col(pos))
                 elif pos[0] > 800:
                     pass

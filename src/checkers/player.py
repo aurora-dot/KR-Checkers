@@ -1,5 +1,8 @@
 class Player:
-    def __init__(self, side, board, game) -> None:
-        self.side = side
+    def __init__(self, type, board, game) -> None:
+        self.type = type
         self.board = board
         self.game = game
+
+    def minmax(self, turn, alpha, beta):
+        pass

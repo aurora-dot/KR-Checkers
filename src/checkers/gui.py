@@ -12,6 +12,7 @@ class Gui:
         "red": (255, 85, 85),
         "pink": (255, 121, 198),
         "orange": (255, 184, 108),
+        "purple": (189, 147, 249),
     }
 
     def __init__(self, window) -> None:
@@ -21,7 +22,10 @@ class Gui:
     def update_window(self) -> None:
         self.draw_board()
         self.draw_pieces()
-        self.draw_valid_moves()
+        if self.checkers.selected_piece:
+            self.draw_selected_piece_valid_moves()
+        else:
+            self.draw_valid_moves()
         self.draw_side_bar()
         pygame.display.update()
 
@@ -97,7 +101,46 @@ class Gui:
                             (piece_x - 10, piece_y - 20),
                         )
 
-    def draw_valid_moves(self) -> None:
+    def draw_selected_piece_valid_moves(self) -> None:
+        moves = self.checkers.all_valid_moves_for_piece(
+            self.checkers.selected_piece[0:2]
+        )
+        radius = (100 // 2) - 14
+
+        print(moves)
+
+        for move in moves:
+            row, col = move
+            print(row, col)
+            # Piece position
+            piece_x = (100 * col) + (100 // 2)
+            piece_y = (100 * row) + (100 // 2)
+
+            self.draw_circle(
+                self.window,
+                piece_x,
+                piece_y,
+                radius + 4,
+                self.colours["purple"],
+            )
+
+            # if self.checkers.board.pieces[row, col]:
+            #     colour = self.checkers.board.pieces[row, col].colour
+            # else:
+            #     colour = self.colours["black"]
+
+            # Piece center colour
+            self.draw_circle(
+                self.window,
+                piece_x,
+                piece_y,
+                radius,
+                self.colours[self.checkers.board.pieces[row][col].colour]
+                if self.checkers.board.pieces[row][col]
+                else self.colours["black"],
+            )
+
+    def draw_valid_moves(self):
         pass
 
     def draw_side_bar(self) -> None:
