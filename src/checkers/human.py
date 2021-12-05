@@ -7,7 +7,6 @@ class Human(Player):
 
     def select_piece(self, tile_location):
         row, col = tile_location
-        print("hit 1")
         if (
             self.board.pieces[row][col]
             and self.board.pieces[row][col].type == 0
@@ -19,8 +18,6 @@ class Human(Player):
             #
 
             self.game.selected_piece = (row, col, self.board.pieces[row][col])
-            print(self.game.selected_piece)
-            print("Selected")
 
     def place_piece(self, tile_location):
         if self.game.validate_move(tile_location):

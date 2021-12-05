@@ -12,7 +12,7 @@ class Game:
     def start_new_game(self):
         self.valid_moves = {}
         self.selected_piece = None
-        self.turn = 0  # r_choice([0, 1])
+        self.turn = 0
         self.board = Board()
         self.human = Human(0, self.board, self)
         self.ai = Ai(1, self.board, self)
@@ -28,6 +28,8 @@ class Game:
                 self.selected_piece = None
             else:
                 self.human.place_piece(tile_location)
+        elif self.turn == 1:
+            pass
 
     def calculate_heuristic(self):
         pass
@@ -68,19 +70,19 @@ class Game:
 
         return False
 
-        ################################################
-        # Validate move flow                           #
-        ################################################
-        # Human class stores the valid moves and piece #
-        # Person clicks piece,                         #
-        #   Human class checks if the selected piece   #
-        #   has valid moves                            #
-        # Person clicks tile                           #
-        #   Human class moves the piece to the tile    #
-        ################################################
+    ################################################
+    # Validate move flow                           #
+    ################################################
+    # Human class stores the valid moves and piece #
+    # Person clicks piece,                         #
+    #   Human class checks if the selected piece   #
+    #   has valid moves                            #
+    # Person clicks tile                           #
+    #   Human class moves the piece to the tile    #
+    ################################################
 
     def all_valid_moves(self):
-        print("bruh sound #3")
+        pass
 
     def finished(self) -> int or None:
         if self.board.red_remaining <= 0:
