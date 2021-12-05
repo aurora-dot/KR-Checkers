@@ -1,5 +1,6 @@
 class Piece:
     king = False
+    moves = []
 
     def __init__(self, type: int) -> None:
         self.type = type

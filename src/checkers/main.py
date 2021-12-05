@@ -19,7 +19,10 @@ def main() -> None:
     while playing:
         clock.tick(fps)
 
-        if gui.checkers.turn == gui.checkers.players[1].type:
+        if (
+            gui.checkers.turn == gui.checkers.players[1].type
+            and not gui.checkers.finished()
+        ):
             gui.checkers.take_turn(None)
 
         for event in pygame.event.get():
@@ -33,6 +36,7 @@ def main() -> None:
                 if (
                     pos[0] <= 800
                     and gui.checkers.turn == gui.checkers.players[0].type
+                    and not gui.checkers.finished()
                 ):
                     gui.checkers.take_turn(gui.convert_x_y_to_row_col(pos))
                 elif pos[0] > 800:

@@ -18,6 +18,11 @@ class Human(Player):
             #
 
             self.game.selected_piece = (row, col, self.board.pieces[row][col])
+            self.game.selected_piece[
+                2
+            ].moves = self.game.all_valid_moves_for_piece(
+                self.game.selected_piece[0:2]
+            )
 
     def place_piece(self, tile_location):
         is_valid, made_king = self.game.validate_move(

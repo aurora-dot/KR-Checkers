@@ -102,17 +102,11 @@ class Gui:
                         )
 
     def draw_selected_piece_valid_moves(self) -> None:
-        moves = self.checkers.all_valid_moves_for_piece(
-            self.checkers.selected_piece[0:2]
-        )
+        moves = self.checkers.selected_piece[2].moves
         radius = (100 // 2) - 14
-
-        print(moves)
 
         for move in moves:
             row, col = move
-            print(row, col)
-            # Piece position
             piece_x = (100 * col) + (100 // 2)
             piece_y = (100 * row) + (100 // 2)
 
@@ -124,12 +118,6 @@ class Gui:
                 self.colours["purple"],
             )
 
-            # if self.checkers.board.pieces[row, col]:
-            #     colour = self.checkers.board.pieces[row, col].colour
-            # else:
-            #     colour = self.colours["black"]
-
-            # Piece center colour
             self.draw_circle(
                 self.window,
                 piece_x,

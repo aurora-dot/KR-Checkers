@@ -62,10 +62,8 @@ class Game:
     def all_valid_moves_for_piece(self, piece_location):
         valid_moves = []
         row, col = piece_location
-        print((row, col))
         for i in range(row - 1, row + 2, 1):
             for j in range(col - 1, col + 2, 1):
-                print(i, j)
                 is_valid, made_king = self.validate_move(
                     self.selected_piece[2], self.selected_piece[0:2], (i, j)
                 )
