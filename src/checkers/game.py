@@ -64,16 +64,28 @@ class Game:
         og_row, og_col = piece_location
         row, col = tile_location
 
+        # Checks if board tile is black, 
+        #   that the piece is not counted as an option 
+        #   and that you cannot land on pieces
         if (
             row < 8
             and col < 8
             and self.board.board[row][col] == 1
-            and self.board.pieces[row][col] != piece.type
             and self.board.pieces[row][col]
             != self.board.pieces[og_row][og_col]
+            and (not self.board.pieces[row][col])
         ):
             print("yes")
-            return True, True, (row, col)
+
+            # For white as example
+            # if blank square above you can move but only one above
+            #   or black square past token diagonally above you can move and take piece, two above
+            #   can't jump over your own piece
+            # if king, do above but can move backwards or forward
+            # if opposite side takes king the token becomes king
+            # if reached other side, token become king
+
+            return True, False, (row, col)
         else:
             print("no")
             return False, False, None
@@ -83,6 +95,15 @@ class Game:
         row, col = piece_location
         for i in range(row - 2, row + 3, 1):
             for j in range(col - 2, col + 3, 1):
+
+                # when in corner of bounding box check if red is next to it to see if it should be counted
+                # can't jump to ''i == row - 2 & j == col - 2'' if  ''i == row - 1 & j == col - 1''
+                # i == row - 2 & j == col + 2
+                # i == row + 2 & j == col - 2
+                # i == row + 2 & j == col + 2
+
+                # find all possibilities, 
+
                 print(i, j)
                 is_valid, made_king, to = self.validate_move(
                     self.selected_piece[2], self.selected_piece[0:2], (i, j)
