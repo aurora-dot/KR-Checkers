@@ -29,8 +29,56 @@ class Game:
             else:
                 self.human.place_piece(tile_location)
 
-    def validate_move(self, move):
-        print("bruh sound #2")
+    def validate_move(self, tile_location):
+        row, col = tile_location
+
+        if self.board.board[row][col] == 1:
+            print("Bruh")
+            print(self.selected_piece[0:2], (row + 1, col + 1))
+            if (
+                self.selected_piece[0:2] == (row + 1, col + 1)
+                or self.selected_piece[0:2] == (row + 1, col - 1)
+                or self.selected_piece[0:2] == (row - 1, col + 1)
+                or self.selected_piece[0:2] == (row - 1, col - 1)
+            ):
+
+                if (
+                    self.board.pieces[row][col]
+                    and self.board.pieces[row][col].type
+                    == self.selected_piece[2].type
+                ):
+                    print("bad")
+                elif not self.board.pieces[row][col] or (
+                    self.board.pieces[row][col]
+                    and self.board.pieces[row][col].type
+                    != self.selected_piece[2].type
+                ):
+                    print("okay-ish")
+                    if not self.selected_piece[2].king:
+                        print("Warmer")
+                        if (
+                            self.selected_piece[2].type == 0
+                            and row < self.selected_piece[0]
+                        ) or (
+                            self.selected_piece[2].type == 1
+                            and row > self.selected_piece[0]
+                        ):
+                            if (
+                                self.selected_piece[2].type == 0 and row == 0
+                            ) or (
+                                self.selected_piece[2].type == 1 and row == 7
+                            ):
+                                self.selected_piece[2].king = True
+                                print("Made piece king")
+
+                            print("yay! but only forward if not king")
+                            return True
+                    else:
+                        print("King moved")
+                        print("yay!")
+                        return True
+
+        return False
 
         ################################################
         # Validate move flow                           #
