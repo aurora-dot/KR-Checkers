@@ -12,7 +12,7 @@ class Gui:
         "red": (255, 85, 85),
         "pink": (255, 121, 198),
         "orange": (255, 184, 108),
-        "purple": (189, 147, 249),
+        "green": (80, 250, 123),
     }
 
     def __init__(self, window) -> None:
@@ -115,7 +115,7 @@ class Gui:
                 piece_x,
                 piece_y,
                 radius + 4,
-                self.colours["purple"],
+                self.colours["green"],
             )
 
             self.draw_circle(
