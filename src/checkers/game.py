@@ -1,3 +1,4 @@
+from cmath import pi
 from .ai import Ai
 from .board import Board
 from .human import Human
@@ -59,16 +60,105 @@ class Game:
 
         return False, False
 
+    def validate_move(self, piece, piece_location, tile_location):
+        row, col = tile_location
+
+        if (
+            row < 8
+            and col < 8
+            and self.board.board[row][col] == 1
+            and self.board.pieces[row][col] != piece.type
+        ):
+            if not self.board.pieces[row][col]:
+                if (
+                    piece_location == (row + 1, col + 1)
+                    and row + 1 < 8
+                    and col + 1 < 8
+                    and not self.board.pieces[row + 1][col + 1]
+                ):
+                    if (not piece.king) and (
+                        (piece.type == 0 and row < self.selected_piece[0])
+                        or (piece.type == 1 and row > self.selected_piece[0])
+                    ):
+                        return True, False, (row + 1, col + 1)
+                if (
+                    piece_location == (row + 1, col - 1)
+                    and row + 1 < 8
+                    and col - 1 >= 8
+                    and not self.board.pieces[row + 1][col - 1]
+                ):
+                    if (not piece.king) and (
+                        (piece.type == 0 and row < self.selected_piece[0])
+                        or (piece.type == 1 and row > self.selected_piece[0])
+                    ):
+                        return True, False, (row + 1, col - 1)
+                if (
+                    piece_location == (row - 1, col + 1)
+                    and row - 1 >= 8
+                    and col + 1 < 8
+                    and not self.board.pieces[row - 1][col + 1]
+                ):
+                    if (not piece.king) and (
+                        (piece.type == 0 and row < self.selected_piece[0])
+                        or (piece.type == 1 and row > self.selected_piece[0])
+                    ):
+                        return True, False, (row - 1, col + 1)
+                if (
+                    piece_location == (row - 1, col - 1)
+                    and row - 1 >= 8
+                    and col - 1 >= 8
+                    and not self.board.pieces[row - 1][col - 1]
+                ):
+                    if (not piece.king) and (
+                        (piece.type == 0 and row < self.selected_piece[0])
+                        or (piece.type == 1 and row > self.selected_piece[0])
+                    ):
+                        return True, False, (row - 1, col - 1)
+
+            elif self.board.pieces[row][col]:
+                if (
+                    piece_location == (row + 1, col + 1)
+                    and row + 2 < 8
+                    and col + 2 < 8
+                    and not self.board.pieces[row + 2][col + 2]
+                ):
+                    return True, False, (row + 2, col + 2)
+                if (
+                    piece_location == (row + 1, col - 1)
+                    and row + 2 < 8
+                    and col - 2 >= 0
+                    and not self.board.pieces[row + 2][col - 2]
+                ):
+                    return True, False, (row + 2, col - 2)
+                if (
+                    piece_location == (row - 1, col + 1)
+                    and row - 2 >= 0
+                    and col + 2 < 8
+                    and not self.board.pieces[row - 2][col + 2]
+                ):
+                    return True, False, (row - 2, col + 2)
+                if (
+                    piece_location == (row - 1, col - 1)
+                    and row - 2 >= 0
+                    and col - 2 >= 0
+                    and not self.board.pieces[row - 2][col - 2]
+                ):
+                    return True, False, (row - 2, col - 2)
+
+        return False, False, None
+
     def all_valid_moves_for_piece(self, piece_location):
         valid_moves = []
         row, col = piece_location
-        for i in range(row - 1, row + 2, 1):
-            for j in range(col - 1, col + 2, 1):
-                is_valid, made_king = self.validate_move(
+        for i in range(row - 2, row + 3, 1):
+            for j in range(col - 2, col + 3, 1):
+                print(i, j)
+                is_valid, made_king, to = self.validate_move(
                     self.selected_piece[2], self.selected_piece[0:2], (i, j)
                 )
                 if is_valid:
-                    valid_moves.append((i, j))
+                    print("h : ", to)
+                    valid_moves.append(to)
 
         return valid_moves
 

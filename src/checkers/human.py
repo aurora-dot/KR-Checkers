@@ -25,15 +25,10 @@ class Human(Player):
             )
 
     def place_piece(self, tile_location):
-        is_valid, made_king = self.game.validate_move(
-            self.game.selected_piece[2],
-            self.game.selected_piece[0:2],
-            tile_location,
-        )
-        if is_valid:
+        if tile_location in self.game.selected_piece[2].moves:
             self.board.move_piece(self.game.selected_piece[0:2], tile_location)
-            if made_king:
-                self.game.selected_piece[2].king = True
+            # if made_king:
+            #     self.game.selected_piece[2].king = True
 
             # Check for jumps here
 

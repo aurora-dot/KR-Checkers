@@ -18,9 +18,15 @@ class Board:
             for col in range(8):
                 if (row + 1) % 2 == col % 2:
                     if row < 3:
-                        self.pieces[row].append(Piece(1))
+
                         # self.pieces[row][-1].king = True
-                        self.white_remaining += 1
+                        if not (
+                            (row == 1 and col == 2) or (row == 1 and col == 4)
+                        ):
+                            self.pieces[row].append(Piece(1))
+                            self.white_remaining += 1
+                        else:
+                            self.pieces[row].append(None)
                     elif row > 4:
                         self.pieces[row].append(Piece(0))
                         self.red_remaining += 1
