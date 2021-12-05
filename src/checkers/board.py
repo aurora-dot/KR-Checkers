@@ -18,7 +18,6 @@ class Board:
             for col in range(8):
                 if (row + 1) % 2 == col % 2:
                     if row < 3:
-
                         # self.pieces[row][-1].king = True
                         if not (
                             (row == 1 and col == 2) or (row == 1 and col == 4) or (row == 0 and col == 1)

@@ -81,7 +81,7 @@ class Game:
             # For white as example
             # if blank square above you can move but only one above
             #   or black square past token diagonally above you can move and take piece, two above
-            #   can't jump over your own piece
+            #   can't jump over your own piece (done)
             # if king, do above but can move backwards or forward
             # if opposite side takes king the token becomes king
             # if reached other side, token become king
