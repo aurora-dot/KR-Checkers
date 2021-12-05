@@ -36,18 +36,32 @@ class Human(Player):
 
                 if (
                     self.board.pieces[row][col]
-                    and self.board.pieces[row][col].type == 0
+                    and self.board.pieces[row][col].type
+                    == self.game.selected_piece[2].type
                 ):
                     print("bad")
                 elif not self.board.pieces[row][col] or (
                     self.board.pieces[row][col]
-                    and self.board.pieces[row][col].type != 0
+                    and self.board.pieces[row][col].type
+                    != self.game.selected_piece[2].type
                 ):
                     print("okay-ish")
                     if not self.game.selected_piece[2].king:
                         print("Warmer")
-                        if row < self.game.selected_piece[0]:
-                            if row == 0:
+                        if (
+                            self.game.selected_piece[2].type == 0
+                            and row < self.game.selected_piece[0]
+                        ) or (
+                            self.game.selected_piece[2].type == 1
+                            and row > self.game.selected_piece[0]
+                        ):
+                            if (
+                                self.game.selected_piece[2].type == 0
+                                and row == 0
+                            ) or (
+                                self.game.selected_piece[2].type == 1
+                                and row == 7
+                            ):
                                 self.game.selected_piece[2].king = True
                                 print("Made piece king")
 
