@@ -61,6 +61,7 @@ class Game:
         return False, False
 
     def validate_move(self, piece, piece_location, tile_location):
+        og_row, og_col = piece_location
         row, col = tile_location
 
         if (
@@ -68,84 +69,14 @@ class Game:
             and col < 8
             and self.board.board[row][col] == 1
             and self.board.pieces[row][col] != piece.type
+            and self.board.pieces[row][col]
+            != self.board.pieces[og_row][og_col]
         ):
-            if not self.board.pieces[row][col]:
-                if (
-                    piece_location == (row + 1, col + 1)
-                    and row + 1 < 8
-                    and col + 1 < 8
-                    and not self.board.pieces[row + 1][col + 1]
-                ):
-                    if (not piece.king) and (
-                        (piece.type == 0 and row < self.selected_piece[0])
-                        or (piece.type == 1 and row > self.selected_piece[0])
-                    ):
-                        return True, False, (row + 1, col + 1)
-                if (
-                    piece_location == (row + 1, col - 1)
-                    and row + 1 < 8
-                    and col - 1 >= 8
-                    and not self.board.pieces[row + 1][col - 1]
-                ):
-                    if (not piece.king) and (
-                        (piece.type == 0 and row < self.selected_piece[0])
-                        or (piece.type == 1 and row > self.selected_piece[0])
-                    ):
-                        return True, False, (row + 1, col - 1)
-                if (
-                    piece_location == (row - 1, col + 1)
-                    and row - 1 >= 8
-                    and col + 1 < 8
-                    and not self.board.pieces[row - 1][col + 1]
-                ):
-                    if (not piece.king) and (
-                        (piece.type == 0 and row < self.selected_piece[0])
-                        or (piece.type == 1 and row > self.selected_piece[0])
-                    ):
-                        return True, False, (row - 1, col + 1)
-                if (
-                    piece_location == (row - 1, col - 1)
-                    and row - 1 >= 8
-                    and col - 1 >= 8
-                    and not self.board.pieces[row - 1][col - 1]
-                ):
-                    if (not piece.king) and (
-                        (piece.type == 0 and row < self.selected_piece[0])
-                        or (piece.type == 1 and row > self.selected_piece[0])
-                    ):
-                        return True, False, (row - 1, col - 1)
-
-            elif self.board.pieces[row][col]:
-                if (
-                    piece_location == (row + 1, col + 1)
-                    and row + 2 < 8
-                    and col + 2 < 8
-                    and not self.board.pieces[row + 2][col + 2]
-                ):
-                    return True, False, (row + 2, col + 2)
-                if (
-                    piece_location == (row + 1, col - 1)
-                    and row + 2 < 8
-                    and col - 2 >= 0
-                    and not self.board.pieces[row + 2][col - 2]
-                ):
-                    return True, False, (row + 2, col - 2)
-                if (
-                    piece_location == (row - 1, col + 1)
-                    and row - 2 >= 0
-                    and col + 2 < 8
-                    and not self.board.pieces[row - 2][col + 2]
-                ):
-                    return True, False, (row - 2, col + 2)
-                if (
-                    piece_location == (row - 1, col - 1)
-                    and row - 2 >= 0
-                    and col - 2 >= 0
-                    and not self.board.pieces[row - 2][col - 2]
-                ):
-                    return True, False, (row - 2, col - 2)
-
-        return False, False, None
+            print("yes")
+            return True, True, (row, col)
+        else:
+            print("no")
+            return False, False, None
 
     def all_valid_moves_for_piece(self, piece_location):
         valid_moves = []
