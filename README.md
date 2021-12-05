@@ -22,8 +22,8 @@ Have fun!
 ## Todo
 Moving a piece while selection and move are in two separate steps.
 
-- [ ] Movement
-    - [ ] King
+- [x] Movement
+    - [x] King
     - [ ] Auto capture
 - [ ] Help menu
 - [ ] Win situations
@@ -42,7 +42,7 @@ Moving a piece while selection and move are in two separate steps.
 
 - Validation of moves (16 marks) 
     - [ ] No invalid moves carried out by the AI 
-    - [ ] Automatic check for valid user moves 
+    - [x] Automatic check for valid user moves 
     - [ ] Rejection of invalid user moves, with a specific explanation given 
     - [ ] Forced capture - if a player can capture an enemy piece they have to do so. If there is more than one capturing opportunity in the same turn, the user may choose which one to take.  
 
@@ -54,10 +54,10 @@ Moving a piece while selection and move are in two separate steps.
     - [ ] Some kind of help feature that can be enabled at the user's request to get hints about available moves, given the current game state. Sophisticated implementations should employ the AI functionality to make suggestions on optimal moves. 
  
 - Human-Computer Interface (up to 4 marks each)  
-    - [ ] Some kind of board representation displayed on screen 
+    - [x] Some kind of board representation displayed on screen 
     - [ ] The interface properly updates the display after completed moves (User and AI moves) 
-    - [ ] Fully interactive GUI that uses graphics (You are permitted to use tools that make it easier to construct a GUI by generating the necessary code, such as layout managers provided with Java IDEs like Eclipse or NetBeans)  
-    - [ ] Mouse interaction focus, e.g., click to select & click to place, or drag & drop (better) 
+    - [x] Fully interactive GUI that uses graphics (You are permitted to use tools that make it easier to construct a GUI by generating the necessary code, such as layout managers provided with Java IDEs like Eclipse or NetBeans)  
+    - [x] Mouse interaction focus, e.g., click to select & click to place, or drag & drop (better) 
     - [ ] GUI pauses appropriately to show the intermediate steps of any multi-leg moves 
     - [ ] Dedicated display of the rules (e.g., a corresponding button opening a pop-up window) 
 
