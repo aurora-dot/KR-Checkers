@@ -64,8 +64,8 @@ class Game:
         og_row, og_col = piece_location
         row, col = tile_location
 
-        # Checks if board tile is black, 
-        #   that the piece is not counted as an option 
+        # Checks if board tile is black,
+        #   that the piece is not counted as an option
         #   and that you cannot land on pieces
         if (
             row < 8
@@ -96,21 +96,46 @@ class Game:
         for i in range(row - 2, row + 3, 1):
             for j in range(col - 2, col + 3, 1):
 
-                # when in corner of bounding box check if red is next to it to see if it should be counted
-                # can't jump to ''i == row - 2 & j == col - 2'' if  ''i == row - 1 & j == col - 1''
-                # i == row - 2 & j == col + 2
-                # i == row + 2 & j == col - 2
-                # i == row + 2 & j == col + 2
-
-                # find all possibilities, 
-
                 print(i, j)
                 is_valid, made_king, to = self.validate_move(
                     self.selected_piece[2], self.selected_piece[0:2], (i, j)
                 )
                 if is_valid:
-                    print("h : ", to)
-                    valid_moves.append(to)
+                    if (
+                        (i == row + 2 and j == col + 2)
+                        and (self.board.pieces[row + 1][col + 1])
+                        and self.board.pieces[row + 1][col + 1].type
+                        == self.selected_piece[2].type
+                    ):
+                        # Bottom right
+                        pass
+                    elif (
+                        (i == row - 2 and j == col + 2)
+                        and (self.board.pieces[row - 1][col + 1])
+                        and self.board.pieces[row - 1][col + 1].type
+                        == self.selected_piece[2].type
+                    ):
+                        # Top right
+                        pass
+                    elif (
+                        (i == row + 2 and j == col - 2)
+                        and (self.board.pieces[row + 1][col - 1])
+                        and self.board.pieces[row + 1][col - 1].type
+                        == self.selected_piece[2].type
+                    ):
+                        # Bottom left
+                        pass
+                    elif (
+                        (i == row - 2 and j == col - 2)
+                        and (self.board.pieces[row - 1][col - 1])
+                        and self.board.pieces[row - 1][col - 1].type
+                        == self.selected_piece[2].type
+                    ):
+                        # Top left
+                        pass
+                    else:
+                        print("h : ", to)
+                        valid_moves.append(to)
 
         return valid_moves
 
