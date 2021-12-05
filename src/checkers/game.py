@@ -1,4 +1,5 @@
 from cmath import pi
+import re
 from .ai import Ai
 from .board import Board
 from .human import Human
@@ -85,7 +86,14 @@ class Game:
             # if opposite side takes king the token becomes king
             # if reached other side, token become king
 
-            return True, False, (row, col)
+            if not piece.king:
+                if (piece.type == 0 and row < og_row) or (piece.type == 1 and row > og_row):
+                    return True, False, (row, col)
+                else:
+                    return False, False, (row, col)
+            else:
+                return True, False, (row, col)
+
         else:
             print("no")
             return False, False, None

@@ -21,7 +21,7 @@ class Board:
 
                         # self.pieces[row][-1].king = True
                         if not (
-                            (row == 1 and col == 2) or (row == 1 and col == 4)
+                            (row == 1 and col == 2) or (row == 1 and col == 4) or (row == 0 and col == 1)
                         ):
                             self.pieces[row].append(Piece(1))
                             self.white_remaining += 1
