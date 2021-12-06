@@ -104,10 +104,8 @@ class Gui:
     def draw_selected_piece_valid_moves(self) -> None:
         moves = self.checkers.selected_piece[2].moves
         radius = (100 // 2) - 14
-        print(moves)
 
         for move in moves:
-            print(move)
             row, col = move
 
             piece_x = (100 * col) + (100 // 2)
