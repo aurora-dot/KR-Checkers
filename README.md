@@ -2,10 +2,10 @@
 
 ## Requirements
 Please make sure you have these installed:
-- python version `3.9.6` or above
-    - Check python version: `python3 -V` in the Terminal / CMD
-- pip version `21.2.3` or above
-    - Check pip version: `pip3 -V` in the Terminal / CMD
+- python version `3.6.6` or above
+    - Check python version: `python -V` in the Terminal / CMD
+- pip version `21.1.1` or above
+    - Check pip version: `python -m pip -V` in the Terminal / CMD
 
  You can install the latest version from [here](https://www.python.org/downloads/).
 
@@ -13,9 +13,10 @@ Please make sure you have these installed:
 - Navigate to the base directory using a Terminal / CMD
     - `cd Downloads/KR-Checkers`
 - Install the package with pip
-    - `pip3 install .`
+    - `python -m pip install .`
+    - If the above command gives an error about the Script directory not being on path, copy the returned path to your clipboard
 - Run the program
-    - `PlayCheckers`
+    - If the path error is returned, paste the path and append `PlayCheckers` and enter, if no error was given, simply just run `PlayCheckers`
 
 Have fun!
 
