@@ -2,14 +2,18 @@ import pygame
 from sys import exit
 from .gui import Gui
 
+fps = 10
+res = (1000, 800)
+window = pygame.display.set_mode(res)
+pygame.display.set_caption("K&R: Checkers!")
+
 
 def main() -> None:
-    pygame.init()
+    play_game()
 
-    fps = 10
-    res = (1000, 800)
-    window = pygame.display.set_mode(res)
-    pygame.display.set_caption("K&R: Checkers!")
+
+def play_game():
+    pygame.init()
 
     playing = True
     clock = pygame.time.Clock()
@@ -21,11 +25,11 @@ def main() -> None:
 
         f = gui.checkers.finished()
         if f == -1:
-            print("Draw")
+            gui.win_screen("Draw", "orange")
         elif f == 0:
-            print("Red wins")
+            gui.win_screen("Red wins", "R")
         elif f == 1:
-            print("White wins")
+            gui.win_screen("White wins", "W")
 
         if gui.checkers.turn == gui.checkers.players[1].type:
             gui.checkers.take_turn(None)
@@ -38,7 +42,10 @@ def main() -> None:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
 
-                if (
+                if f is not None:
+                    pygame.quit()
+                    exit()
+                elif (
                     pos[0] <= 800
                     and gui.checkers.turn == gui.checkers.players[0].type
                 ):

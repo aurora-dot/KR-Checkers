@@ -20,10 +20,11 @@ class Gui:
         self.checkers = Game()
 
     def update_window(self) -> None:
-        self.draw_board()
-        self.draw_pieces()
-        self.draw_valid_moves()
-        self.draw_side_bar()
+        if self.checkers.finished() is None:
+            self.draw_board()
+            self.draw_pieces()
+            self.draw_valid_moves()
+            self.draw_side_bar()
         pygame.display.update()
 
     def draw_board(self) -> None:
@@ -102,7 +103,7 @@ class Gui:
         if self.checkers.selected_piece:
             moves = self.checkers.selected_piece[2].moves
         else:
-            moves = self.checkers.all_human_available_moves
+            moves = self.checkers.all_ai_available_moves
 
         radius = (100 // 2) - 14
         for move in moves:
@@ -128,6 +129,35 @@ class Gui:
                 if self.checkers.board.pieces[row][col]
                 else self.colours["black"],
             )
+
+    def win_screen(self, text, colour_str):
+        self.window.fill(self.colours["black"])
+        bf = pygame.font.Font(
+            os.path.dirname(__file__) + "/resources/font.ttf",
+            32,
+        )
+
+        sf = pygame.font.Font(
+            os.path.dirname(__file__) + "/resources/font.ttf",
+            10,
+        )
+
+        bf_render = bf.render(text, True, self.colours[colour_str])
+        sf_render = sf.render("Click to exit", True, self.colours["green"])
+
+        self.window.blit(
+            bf_render,
+            bf_render.get_rect(center=self.window.get_rect().center),
+        )
+
+        center_sf_render = sf_render.get_rect(
+            center=self.window.get_rect().center
+        )
+
+        self.window.blit(
+            sf_render,
+            (center_sf_render[0], center_sf_render[1] + 35),
+        )
 
     def draw_side_bar(self) -> None:
         # Make side bar white
