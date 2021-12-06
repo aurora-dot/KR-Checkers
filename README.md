@@ -23,11 +23,17 @@ Have fun!
 ## Todo
 Moving a piece while selection and move are in two separate steps.
 
-- [x] Movement
-    - [x] King
-    - [ ] Auto capture
-- [ ] Help menu
-- [ ] Win situations
+- [ ] King piece after claiming piece
+- [ ] Multi-leg moves
+    - Check surrounding tiles if opposition piece is there with empty tile after then jump
+- [ ] Make the help display a toggle
+    - Side menu thingy
+- [ ] Make the ai
+    - [ ] Good state representation
+    - [ ] Heuristic thingy for good moves
+    - [ ] etc etc 
+- [ ] Rules button with menu
+- [ ] GUI pauses on multi-leg moves
 
 ## Guidelines Overview
 - Gameplay (20 marks) 

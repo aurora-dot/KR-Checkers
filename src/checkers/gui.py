@@ -103,7 +103,7 @@ class Gui:
         if self.checkers.selected_piece:
             moves = self.checkers.selected_piece[2].moves
         else:
-            moves = self.checkers.all_ai_available_moves
+            moves = self.checkers.all_human_available_moves
 
         radius = (100 // 2) - 14
         for move in moves:
