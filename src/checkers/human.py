@@ -24,3 +24,7 @@ class Human(Player):
 
             self.game.selected_piece = None
             self.game.all_valid_moves()
+
+            return True
+
+        return False

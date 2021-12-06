@@ -14,7 +14,11 @@ class Game:
         self.human = Human(0, self.board, self)
         self.ai = Ai(1, self.board, self)
         self.players = [self.human, self.ai]
-        self.all_valid_moves()
+        self.all_human_available_moves = []
+        (
+            self.all_human_available_moves,
+            self.all_ai_available_moves,
+        ) = self.all_valid_moves()
 
     def take_turn(self, tile_location):
         if not self.selected_piece:
@@ -22,8 +26,12 @@ class Game:
         elif self.selected_piece[0:2] == tile_location:
             self.selected_piece = None
         else:
-            self.players[self.turn].place_piece(tile_location)
-            # self.turn = 1 if self.turn == 0 else 0
+            valid = self.players[self.turn].place_piece(tile_location)
+            if valid:
+                (
+                    self.all_human_available_moves,
+                    self.all_ai_available_moves,
+                ) = self.all_valid_moves()
 
     def calculate_heuristic(self):
         total, human, ai = (0, 0, 0)
@@ -169,6 +177,9 @@ class Game:
         return None, None
 
     def all_valid_moves(self):
+        all_human_available_moves = []
+        all_ai_available_moves = []
+
         for i in range(8):
             for j in range(8):
                 piece = self.board.pieces[i][j]
@@ -178,6 +189,13 @@ class Game:
                     )
                     piece.moves = moves
                     piece.king_moves = king_moves
+
+                    if piece.type == self.human.type:
+                        all_human_available_moves += moves
+                    elif piece.type == self.ai.type:
+                        all_ai_available_moves += moves
+
+        return all_human_available_moves, all_ai_available_moves
 
     def finished(self) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,

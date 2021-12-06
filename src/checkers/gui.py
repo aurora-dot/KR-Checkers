@@ -22,10 +22,7 @@ class Gui:
     def update_window(self) -> None:
         self.draw_board()
         self.draw_pieces()
-        if self.checkers.selected_piece:
-            self.draw_selected_piece_valid_moves()
-        else:
-            self.draw_valid_moves()
+        self.draw_valid_moves()
         self.draw_side_bar()
         pygame.display.update()
 
@@ -101,10 +98,13 @@ class Gui:
                             (piece_x - 10, piece_y - 20),
                         )
 
-    def draw_selected_piece_valid_moves(self) -> None:
-        moves = self.checkers.selected_piece[2].moves
-        radius = (100 // 2) - 14
+    def draw_valid_moves(self) -> None:
+        if self.checkers.selected_piece:
+            moves = self.checkers.selected_piece[2].moves
+        else:
+            moves = self.checkers.all_human_available_moves
 
+        radius = (100 // 2) - 14
         for move in moves:
             row, col = move
 
@@ -128,9 +128,6 @@ class Gui:
                 if self.checkers.board.pieces[row][col]
                 else self.colours["black"],
             )
-
-    def draw_valid_moves(self):
-        pass
 
     def draw_side_bar(self) -> None:
         # Make side bar white
