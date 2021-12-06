@@ -54,3 +54,13 @@ class Board:
         piece = self.pieces[piece_row][piece_col]
         self.pieces[destination_row][destination_col] = piece
         self.pieces[piece_row][piece_col] = None
+
+    def remove_piece(self, captured_location):
+        piece_row, piece_col = captured_location
+        piece_type = self.pieces[piece_row][piece_col].type
+        self.pieces[piece_row][piece_col] = None
+
+        if piece_type == 0:
+            self.white_remaining -= 1
+        elif piece_type == 1:
+            self.red_remaining -= 1

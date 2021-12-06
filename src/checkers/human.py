@@ -19,6 +19,10 @@ class Human(Player):
             self.board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
                 piece.king = True
+            if tile_location in piece.captures:
+                captured_location = piece.captures[tile_location]
+                print(captured_location)
+                self.board.remove_piece(captured_location)
 
             # Check for jumps here and make them maybe
 

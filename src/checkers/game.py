@@ -160,7 +160,7 @@ class Game:
                         if is_valid:
                             valid_moves.append(move_location)
                             has_captured, removed_piece = self.captured(
-                                move_location
+                                (row, col), move_location
                             )
 
                             if made_king:
@@ -169,12 +169,24 @@ class Game:
                             if has_captured:
                                 captures[move_location] = removed_piece
 
-        return valid_moves, king_creation_moves
+        return valid_moves, king_creation_moves, captures
 
-    def captured(self, move):
+    def captured(self, piece_location, tile_location):
         # TODO: check if piece is captured,
         #   if opposite side takes king the token becomes king
-        return None, None
+        p_row, p_col = piece_location
+        t_row, t_col = tile_location
+
+        if p_row + 2 == t_row and p_col + 2 == t_col:
+            return True, (p_row + 1, p_col + 1)
+        elif p_row + 2 == t_row and p_col - 2 == t_col:
+            return True, (p_row + 1, p_col - 1)
+        elif p_row - 2 == t_row and p_col + 2 == t_col:
+            return True, (p_row - 1, p_col + 1)
+        elif p_row - 2 == t_row and p_col - 2 == t_col:
+            return True, (p_row - 1, p_col - 1)
+        else:
+            return False, False
 
     def all_valid_moves(self):
         all_human_available_moves = []
@@ -184,11 +196,16 @@ class Game:
             for j in range(8):
                 piece = self.board.pieces[i][j]
                 if piece:
-                    moves, king_moves = self.all_valid_moves_for_piece(
+                    (
+                        moves,
+                        king_moves,
+                        captures,
+                    ) = self.all_valid_moves_for_piece(
                         i, j, self.board.pieces[i][j]
                     )
                     piece.moves = moves
                     piece.king_moves = king_moves
+                    piece.captures = captures
 
                     if piece.type == self.human.type:
                         all_human_available_moves += moves
