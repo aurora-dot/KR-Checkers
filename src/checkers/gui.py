@@ -64,7 +64,7 @@ class Gui:
                             self.colours["pink"],
                         )
                     elif (row, col) == self.checkers.selected_piece[0:2]:
-                        # Pink circle outline
+                        # Orange circle outline
                         self.draw_circle(
                             self.window,
                             piece_x,

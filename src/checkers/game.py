@@ -14,6 +14,7 @@ class Game:
         self.human = Human(0, self.board, self)
         self.ai = Ai(1, self.board, self)
         self.players = [self.human, self.ai]
+        self.all_valid_moves()
 
     def take_turn(self, tile_location):
         if not self.selected_piece:
@@ -154,6 +155,18 @@ class Game:
                                 king_creation_moves.append(to)
 
         return valid_moves, king_creation_moves
+
+    def all_valid_moves(self):
+        for i in range(8):
+            for j in range(8):
+                if self.board.pieces[i][j]:
+                    self.selected_piece = (i, j, self.board.pieces[i][j])
+                    to, king_to = self.all_valid_moves_for_piece(
+                        self.selected_piece[0:2]
+                    )
+                    self.selected_piece[2].moves = to
+                    self.selected_piece[2].king_moves = king_to
+                    self.selected_piece = None
 
     def finished(self) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
