@@ -47,15 +47,6 @@ class Game:
             and (not self.board.pieces[row][col])
         ):
 
-            # For white as example
-            # if blank square above you can move but only one above
-            #   or black square past token diagonally
-            #       above you can move and take piece, two above
-            #   can't jump over your own piece (done)
-            # if king, do above but can move backwards or forward
-            # if opposite side takes king the token becomes king
-            # if reached other side, token become king
-
             if not piece.king:
                 if (piece.type == 0 and row < og_row) or (
                     piece.type == 1 and row > og_row
@@ -63,6 +54,10 @@ class Game:
                     if (piece.type == 0 and row == 0) or (
                         piece.type == 1 and row == 7
                     ):
+                        # format:
+                        #   valid move,
+                        #   king created,
+                        #   move to tile location
                         return True, True, (row, col)
                     else:
                         return True, False, (row, col)
@@ -81,6 +76,8 @@ class Game:
 
         for i in range(row - 2, row + 3, 1):
             for j in range(col - 2, col + 3, 1):
+                # Checks if i and j are within the bounds of the board,
+                #   and only count the black squares
                 if (
                     (i + 1) % 2 == j % 2
                     and i != row
@@ -92,34 +89,37 @@ class Game:
                 ):
 
                     # Move filters
+                    # Checks for friendly token blocks, can't jump over them
                     if (
                         (i == row + 2 and j == col + 2)
                         and self.board.pieces[row + 1][col + 1]
                         and self.board.pieces[row + 1][col + 1].type == piece
                     ):
-                        # Bottom right, same side piece blocking
+                        # Friendly token blocking bottom right of token
                         pass
                     elif (
                         (i == row - 2 and j == col + 2)
                         and self.board.pieces[row - 1][col + 1]
                         and self.board.pieces[row - 1][col + 1].type == piece
                     ):
-                        # Top right, same side piece blocking
+                        # Friendly token blocking top right of token
                         pass
                     elif (
                         (i == row + 2 and j == col - 2)
                         and self.board.pieces[row + 1][col - 1]
                         and self.board.pieces[row + 1][col - 1].type == piece
                     ):
-                        # Bottom left, same side piece blocking
+                        # Friendly token blocking bottom left of token
                         pass
                     elif (
                         (i == row - 2 and j == col - 2)
                         and self.board.pieces[row - 1][col - 1]
                         and self.board.pieces[row - 1][col - 1].type == piece
                     ):
-                        # Top left, same side piece blocking
+                        # Friendly token blocking top left of token
                         pass
+
+                    # Removes jump tiles if no enemy piece is there
                     elif (
                         i == row + 2 and j == col + 2
                     ) and not self.board.pieces[row + 1][col + 1]:
@@ -137,25 +137,35 @@ class Game:
                     ) and not self.board.pieces[row - 1][col - 1]:
                         pass
                     else:
-                        is_valid, made_king, to = self.validate_move(
+                        # Validates if the piece can
+                        #   actually be moved to that spot
+                        (
+                            is_valid,
+                            made_king,
+                            move_location,
+                        ) = self.validate_move(
                             piece,
                             (row, col),
                             (i, j),
                         )
 
                         if is_valid:
-                            valid_moves.append(to)
-                            has_captured, removed_piece = self.captured(to)
+                            valid_moves.append(move_location)
+                            has_captured, removed_piece = self.captured(
+                                move_location
+                            )
 
                             if made_king:
-                                king_creation_moves.append(to)
+                                king_creation_moves.append(move_location)
 
                             if has_captured:
-                                captures[to] = removed_piece
+                                captures[move_location] = removed_piece
 
         return valid_moves, king_creation_moves
 
     def captured(self, move):
+        # TODO: check if piece is captured,
+        #   if opposite side takes king the token becomes king
         return None, None
 
     def all_valid_moves(self):
@@ -163,11 +173,11 @@ class Game:
             for j in range(8):
                 piece = self.board.pieces[i][j]
                 if piece:
-                    to, king_to = self.all_valid_moves_for_piece(
+                    moves, king_moves = self.all_valid_moves_for_piece(
                         i, j, self.board.pieces[i][j]
                     )
-                    piece.moves = to
-                    piece.king_moves = king_to
+                    piece.moves = moves
+                    piece.king_moves = king_moves
 
     def finished(self) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
