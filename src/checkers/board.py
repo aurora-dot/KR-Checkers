@@ -29,15 +29,8 @@ class Board:
                         else:
                             self.pieces[row].append(None)
                     elif row > 4:
-                        if not (
-                            (row == 5 and col == 4)
-                            or (row == 6 and col == 3)
-                            or (row == 7 and col == 2)
-                        ):
-                            self.pieces[row].append(Piece(0))
-                            self.red_remaining += 1
-                        else:
-                            self.pieces[row].append(None)
+                        self.pieces[row].append(Piece(0))
+                        self.red_remaining += 1
                     else:
                         self.pieces[row].append(None)
 

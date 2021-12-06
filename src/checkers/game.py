@@ -14,11 +14,14 @@ class Game:
         self.human = Human(0, self.board, self)
         self.ai = Ai(1, self.board, self)
         self.players = [self.human, self.ai]
-        self.all_human_available_moves = []
         (
             self.all_human_available_moves,
             self.all_ai_available_moves,
         ) = self.all_valid_moves()
+
+        print("h: ", self.all_human_available_moves)
+        print("a: ", self.all_ai_available_moves)
+        print("---")
 
     def take_turn(self, tile_location):
         if not self.selected_piece:
@@ -32,6 +35,9 @@ class Game:
                     self.all_human_available_moves,
                     self.all_ai_available_moves,
                 ) = self.all_valid_moves()
+                print("h: ", self.all_human_available_moves)
+                print("a: ", self.all_ai_available_moves)
+                print("---")
 
     def calculate_heuristic(self):
         total, human, ai = (0, 0, 0)
@@ -217,9 +223,19 @@ class Game:
     def finished(self) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
         # draw if neither side has a legal move
-        if self.board.red_remaining <= 0:
+        if (
+            self.all_ai_available_moves == []
+            and self.all_human_available_moves == []
+        ):
+            return -1
+        elif (
+            self.board.red_remaining <= 0 or self.all_ai_available_moves == []
+        ):
             return 0
-        elif self.board.white_remaining <= 0:
+        elif (
+            self.board.white_remaining <= 0
+            or self.all_human_available_moves == []
+        ):
             return 1
         else:
             return None
