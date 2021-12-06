@@ -3,7 +3,7 @@ import re
 from .ai import Ai
 from .board import Board
 from .human import Human
-
+import sys
 
 class Game:
     def __init__(self) -> None:
@@ -105,21 +105,23 @@ class Game:
         valid_moves = []
         king_creation_moves = []
         row, col = piece_location
+
+
+        # for row in range(8):
+        #     for col in range(row % 2, 8, 2):
+
         for i in range(row - 2, row + 3, 1):
             for j in range(col - 2, col + 3, 1):
-
-                print(i, j)
-                is_valid, made_king, to = self.validate_move(
-                    self.selected_piece[2], self.selected_piece[0:2], (i, j)
-                )
-                if is_valid:
+                if (i + 1) % 2 == j % 2 and i != row and j != col:
+                    print('i: ', i, ' j: ', j)
+                    
                     if (
                         (i == row + 2 and j == col + 2)
                         and (self.board.pieces[row + 1][col + 1])
                         and self.board.pieces[row + 1][col + 1].type
                         == self.selected_piece[2].type
                     ):
-                        # Bottom right
+                        # Bottom right, same side piece blocking
                         pass
                     elif (
                         (i == row - 2 and j == col + 2)
@@ -127,7 +129,7 @@ class Game:
                         and self.board.pieces[row - 1][col + 1].type
                         == self.selected_piece[2].type
                     ):
-                        # Top right
+                        # Top right, same side piece blocking
                         pass
                     elif (
                         (i == row + 2 and j == col - 2)
@@ -135,7 +137,7 @@ class Game:
                         and self.board.pieces[row + 1][col - 1].type
                         == self.selected_piece[2].type
                     ):
-                        # Bottom left
+                        # Bottom left, same side piece blocking
                         pass
                     elif (
                         (i == row - 2 and j == col - 2)
@@ -143,15 +145,41 @@ class Game:
                         and self.board.pieces[row - 1][col - 1].type
                         == self.selected_piece[2].type
                     ):
-                        # Top left
+                        # Top left, same side piece blocking
+                        pass
+                    elif (
+                        (i == row + 2 and j == col + 2)
+                        and not self.board.pieces[row + 1][col + 1]
+                    ):
+                        pass
+                    elif (
+                        (i == row + 2 and j == col - 2)
+                        and not self.board.pieces[row + 1][col - 1]
+                    ):
+                        pass
+                    elif (
+                        (i == row - 2 and j == col + 2)
+                        and not self.board.pieces[row - 1][col + 1]
+                    ):
+                        pass
+                    elif (
+                        (i == row - 2 and j == col - 2)
+                        and not self.board.pieces[row - 1][col - 1]
+                    ):
                         pass
                     else:
-                        print("h : ", to)
-                        valid_moves.append(to)
-                        if made_king:
-                            king_creation_moves.append(to)
+                        is_valid, made_king, to = self.validate_move(
+                            self.selected_piece[2], self.selected_piece[0:2], (i, j)
+                        )
+
+                        if is_valid:
+                            print("h : ", to)
+                            valid_moves.append(to)
+                            if made_king:
+                                king_creation_moves.append(to)
 
         return valid_moves, king_creation_moves
+    
 
     def finished(self) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
