@@ -7,17 +7,18 @@ class Human(Player):
 
     def select_piece(self, tile_location):
         row, col = tile_location
-        if (
-            self.board.pieces[row][col]
-            and self.board.pieces[row][col].type == self.type
-        ):
+        piece = self.board.pieces[row][col]
+        if piece and piece.type == self.type:
             self.game.selected_piece = (row, col, self.board.pieces[row][col])
 
     def place_piece(self, tile_location):
-        if tile_location in self.game.selected_piece[2].moves:
-            self.board.move_piece(self.game.selected_piece[0:2], tile_location)
-            if tile_location in self.game.selected_piece[2].king_moves:
-                self.game.selected_piece[2].king = True
+        piece = self.game.selected_piece[2]
+        location = self.game.selected_piece[0:2]
+
+        if tile_location in piece.moves:
+            self.board.move_piece(location, tile_location)
+            if tile_location in piece.king_moves:
+                piece.king = True
 
             # Check for jumps here and make them maybe
 

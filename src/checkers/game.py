@@ -74,13 +74,10 @@ class Game:
         else:
             return False, False, None
 
-    def all_valid_moves_for_piece(self, piece_location):
+    def all_valid_moves_for_piece(self, row, col, piece):
         valid_moves = []
         king_creation_moves = []
-        row, col = piece_location
-
-        # for row in range(8):
-        #     for col in range(row % 2, 8, 2):
+        captures = {}
 
         for i in range(row - 2, row + 3, 1):
             for j in range(col - 2, col + 3, 1):
@@ -94,35 +91,32 @@ class Game:
                     and i >= 0
                 ):
 
+                    # Move filters
                     if (
                         (i == row + 2 and j == col + 2)
-                        and (self.board.pieces[row + 1][col + 1])
-                        and self.board.pieces[row + 1][col + 1].type
-                        == self.selected_piece[2].type
+                        and self.board.pieces[row + 1][col + 1]
+                        and self.board.pieces[row + 1][col + 1].type == piece
                     ):
                         # Bottom right, same side piece blocking
                         pass
                     elif (
                         (i == row - 2 and j == col + 2)
-                        and (self.board.pieces[row - 1][col + 1])
-                        and self.board.pieces[row - 1][col + 1].type
-                        == self.selected_piece[2].type
+                        and self.board.pieces[row - 1][col + 1]
+                        and self.board.pieces[row - 1][col + 1].type == piece
                     ):
                         # Top right, same side piece blocking
                         pass
                     elif (
                         (i == row + 2 and j == col - 2)
-                        and (self.board.pieces[row + 1][col - 1])
-                        and self.board.pieces[row + 1][col - 1].type
-                        == self.selected_piece[2].type
+                        and self.board.pieces[row + 1][col - 1]
+                        and self.board.pieces[row + 1][col - 1].type == piece
                     ):
                         # Bottom left, same side piece blocking
                         pass
                     elif (
                         (i == row - 2 and j == col - 2)
-                        and (self.board.pieces[row - 1][col - 1])
-                        and self.board.pieces[row - 1][col - 1].type
-                        == self.selected_piece[2].type
+                        and self.board.pieces[row - 1][col - 1]
+                        and self.board.pieces[row - 1][col - 1].type == piece
                     ):
                         # Top left, same side piece blocking
                         pass
@@ -144,29 +138,36 @@ class Game:
                         pass
                     else:
                         is_valid, made_king, to = self.validate_move(
-                            self.selected_piece[2],
-                            self.selected_piece[0:2],
+                            piece,
+                            (row, col),
                             (i, j),
                         )
 
                         if is_valid:
                             valid_moves.append(to)
+                            has_captured, removed_piece = self.captured(to)
+
                             if made_king:
                                 king_creation_moves.append(to)
 
+                            if has_captured:
+                                captures[to] = removed_piece
+
         return valid_moves, king_creation_moves
+
+    def captured(self, move):
+        return None, None
 
     def all_valid_moves(self):
         for i in range(8):
             for j in range(8):
-                if self.board.pieces[i][j]:
-                    self.selected_piece = (i, j, self.board.pieces[i][j])
+                piece = self.board.pieces[i][j]
+                if piece:
                     to, king_to = self.all_valid_moves_for_piece(
-                        self.selected_piece[0:2]
+                        i, j, self.board.pieces[i][j]
                     )
-                    self.selected_piece[2].moves = to
-                    self.selected_piece[2].king_moves = king_to
-                    self.selected_piece = None
+                    piece.moves = to
+                    piece.king_moves = king_to
 
     def finished(self) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
