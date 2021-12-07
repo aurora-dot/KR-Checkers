@@ -10,4 +10,3 @@ class Human(Player):
         piece = self.board.pieces[row][col]
         if piece and piece.type == self.type:
             self.selected_piece = (row, col, self.board.pieces[row][col])
-            print(self.select_piece)

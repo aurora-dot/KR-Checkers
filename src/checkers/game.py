@@ -21,6 +21,7 @@ class Game:
 
         print("h: ", self.all_human_available_moves)
         print("a: ", self.all_ai_available_moves)
+        print(self.calculate_heuristic(self.board))
         print("---")
 
     def take_turn(self, tile_location):
@@ -40,9 +41,35 @@ class Game:
                     self.all_ai_available_moves,
                 ) = self.all_valid_moves(self.board)
 
-    def calculate_heuristic(self, board):
-        total, human, ai = (0, 0, 0)
-        print(total, human, ai)
+                print("h: ", self.all_human_available_moves)
+                print("a: ", self.all_ai_available_moves)
+                print(self.calculate_heuristic(self.board))
+                print("---")
+
+    def calculate_heuristic(self, board: Board):
+        scores = [0, 0]
+
+        for row in range(8):
+            for col in range(8):
+                piece = board.pieces[row][col]
+
+                if piece:
+                    # Pieces
+                    scores[piece.type] += 200
+
+                    # King
+                    if piece.king:
+                        scores[piece.type] += 300
+                        scores[1 if piece.type == 0 else 0] -= 300
+
+                    # Backrow
+                    if (piece.type == 0 and row == 7) or (
+                        piece.type == 1 and row == 0
+                    ):
+                        scores[piece.type] += 50
+
+        human_score, ai_score = scores
+        return human_score, ai_score
 
     def validate_move(self, piece, piece_location, tile_location, board):
         og_row, og_col = piece_location
