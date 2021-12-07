@@ -23,8 +23,8 @@ class Gui:
         if (
             self.checkers.finished(
                 self.checkers.board,
-                self.checkers.all_ai_available_moves,
                 self.checkers.all_human_available_moves,
+                self.checkers.all_ai_available_moves,
             )
             is None
         ):

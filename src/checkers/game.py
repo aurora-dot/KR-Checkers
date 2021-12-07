@@ -221,7 +221,7 @@ class Game:
         return all_human_available_moves, all_ai_available_moves
 
     def finished(
-        self, board, all_ai_available_moves, all_human_available_moves
+        self, board, all_human_available_moves, all_ai_available_moves
     ) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
         # draw if neither side has a legal move
