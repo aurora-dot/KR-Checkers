@@ -35,7 +35,13 @@ def play_game():
 
         if (
             gui.checkers.turn == gui.checkers.players[1].type
-            and gui.checkers.players[1].not_started
+            and not gui.checkers.players[1].started
+            and gui.checkers.players[1].move
+        ):
+            gui.checkers.take_turn(gui.checkers.players[1].move[1])
+        elif (
+            gui.checkers.turn == gui.checkers.players[1].type
+            and not gui.checkers.players[1].started
         ):
             gui.checkers.take_turn(None)
 

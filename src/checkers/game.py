@@ -29,6 +29,7 @@ class Game:
         elif player.selected_piece[0:2] == tile_location:
             player.selected_piece = None
         else:
+            print(player.selected_piece, tile_location)
             valid = player.place_piece(
                 tile_location, self.board, player.selected_piece
             )

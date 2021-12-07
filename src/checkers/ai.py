@@ -1,5 +1,4 @@
 import copy
-from time import sleep
 from .player import Player
 from math import inf
 
@@ -7,28 +6,25 @@ from math import inf
 class Ai(Player):
     depth = 3
     level = 3
-    not_started = True
 
     def __init__(self, type, board, game) -> None:
         super().__init__(type, board, game)
 
     def select_piece(self, tile_location):
-        self.not_started = False
-        print("og:")
-        print(self.board)
+        self.started = False
 
-        self.new_board = self.minmax(
+        result = self.minmax(
             1, copy.deepcopy(self.board), self.depth, -inf, inf
         )
-        # self.selected_piece = (
-        #     self.selected_piece[0],
-        #     self.selected_piece[1],
-        #     self.selected_piece[2],
-        # )
 
-        print("new:")
-        print(self.new_board)
-        sleep(400)
+        print(result)
+
+        self.selected_piece = (
+            self.move[0][0],
+            self.move[0][1],
+            self.board.pieces[self.move[0][0]][self.move[0][1]],
+        )
+
         return True
 
     def select_level(self, level):
@@ -60,11 +56,11 @@ class Ai(Player):
                     for to_loc in data["moves"]
                 ]
 
-                print("h: ", human_moves)
+                # print("h: ", human_moves)
 
                 max_score = -inf
                 for move in human_moves:
-                    print("h move: ", move)
+                    # print("h move: ", move)
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
 
@@ -91,11 +87,11 @@ class Ai(Player):
                     for to_loc in data["moves"]
                 ]
 
-                print("a: ", ai_moves)
+                # print("a: ", ai_moves)
 
                 min_score = inf
                 for move in ai_moves:
-                    print("a move: ", move)
+                    # print("a move: ", move)
 
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
@@ -108,9 +104,11 @@ class Ai(Player):
                     score = self.minmax(0, new_board, depth - 1, alpha, beta)
 
                     new_board = copy.deepcopy(board)
-                    max_score = min(score, min_score)
+                    if score < min_score and self.depth == depth:
+                        self.move = move
+                    min_score = min(score, min_score)
                     beta = min(beta, score)
                     if beta <= alpha:
                         break
 
-                return max_score
+                return min_score

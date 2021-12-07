@@ -3,6 +3,8 @@ import abc
 
 class Player:
     selected_piece = None
+    started = False
+    move = None
 
     def __init__(self, type, board, game) -> None:
         self.type = type
@@ -14,6 +16,7 @@ class Player:
         """Select piece from board"""
 
     def place_piece(self, tile_location, board, selected_piece):
+        self.started = False
         piece = selected_piece[2]
         location = selected_piece[0:2]
 
