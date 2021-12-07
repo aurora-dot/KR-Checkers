@@ -40,6 +40,9 @@ class Board:
                     self.board[row].append(0)
                     self.pieces[row].append(None)
 
+        self.pieces[4][5] = Piece(1)
+        self.white_remaining += 1
+
     def move_piece(self, piece_location, destination_location):
         piece_row, piece_col = piece_location
         destination_row, destination_col = destination_location
