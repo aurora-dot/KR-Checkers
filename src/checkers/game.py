@@ -171,11 +171,52 @@ class Game:
 
                             if has_captured:
                                 captures[move_location] = removed_piece
+                                jumps = self.jump(piece, move_location, board)
+                                print(jumps)
 
-        return valid_moves, king_creation_moves, captures
+        return valid_moves, king_creation_moves, captures, jumps
 
-    def jump(self, piece_location):
+    def jump(self, piece, piece_location, board):
         row, col = piece_location
+        j = []
+
+        if (
+            row + 2 <= 7
+            and col + 2 <= 7
+            and not board.pieces[row + 2][col + 2]
+            and board.pieces[row + 1][col + 1]
+            and board.pieces[row + 1][col + 1].type != piece.type
+        ):
+            j.append((row + 2, col + 2))
+        if (
+            row - 2 >= 0
+            and col + 2 <= 7
+            and not board.pieces[row - 2][col + 2]
+            and board.pieces[row - 1][col + 1]
+            and board.pieces[row - 1][col + 1].type != piece.type
+        ):
+            j.append((row - 2, col + 2))
+        if (
+            row + 2 <= 7
+            and col + 2 >= 0
+            and not board.pieces[row + 2][col - 2]
+            and board.pieces[row + 1][col - 1]
+            and board.pieces[row + 1][col - 1].type != piece.type
+        ):
+            j.append((row + 2, col - 2))
+        if (
+            row + 2 >= 0
+            and col + 2 >= 0
+            and not board.pieces[row - 2][col - 2]
+            and board.pieces[row - 1][col - 1]
+            and board.pieces[row - 1][col - 1].type != piece.type
+        ):
+            j.append((row - 2, col - 2))
+
+        if len(j) != 1:
+            return False, None
+        else:
+            return True, {piece_location: j[0]}
 
     def captured(self, piece_location, tile_location):
         # TODO: check if piece is captured,
