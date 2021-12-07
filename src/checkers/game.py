@@ -32,7 +32,7 @@ class Game:
             valid = player.place_piece(tile_location, self.board)
             if valid:
                 player.selected_piece = None
-                # self.turn = 0 if self.turn == 1 else 1
+                self.turn = 0 if self.turn == 1 else 1
                 self.generate_moves_for_board(self.board)
 
                 # print("h: ", self.human_move_set)
@@ -267,11 +267,6 @@ class Game:
         return human_move_set, ai_move_set
 
     def finished(self, board) -> int or None:
-
-        print(board.ai_move_set)
-
-        # if opponent has no legal moves or no remaining pieces they have won,
-        # draw if neither side has a legal move
         if board.all_ai_moves == [] and board.all_human_moves == []:
             return -1
         elif board.red_remaining <= 0 or board.all_ai_moves == []:

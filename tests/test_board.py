@@ -8,13 +8,7 @@ class MyTestCase(unittest.TestCase):
         board = Board()
 
         # Prints board
-        for row in range(len(board.board)):
-            for col in range(len(board.board[0])):
-                if board.pieces[row][col]:
-                    print(board.pieces[row][col], end=" ")
-                else:
-                    print(board.board[row][col], end=" ")
-            print()
+        print(board)
 
         # Tests board
         self.assertEqual(
