@@ -35,7 +35,6 @@ class Game:
             if valid:
                 player.selected_piece = None
                 self.turn = 0 if self.turn == 1 else 1
-                self.generate_moves_for_board(self.board)
 
                 # print("h: ", self.human_move_set)
                 # print("a: ", self.ai_move_set)

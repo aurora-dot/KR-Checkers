@@ -33,7 +33,10 @@ def play_game():
         elif f == 1:
             gui.win_screen("White wins", "W")
 
-        if gui.checkers.turn == gui.checkers.players[1].type:
+        if (
+            gui.checkers.turn == gui.checkers.players[1].type
+            and gui.checkers.players[1].not_started
+        ):
             gui.checkers.take_turn(None)
 
         for event in pygame.event.get():

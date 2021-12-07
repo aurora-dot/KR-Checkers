@@ -28,6 +28,7 @@ class Player:
             # Check for jumps here and make them maybe
 
             self.selected_piece = None
+            self.game.generate_moves_for_board(self.board)
 
             return True
 
