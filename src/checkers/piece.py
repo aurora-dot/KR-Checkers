@@ -3,6 +3,7 @@ class Piece:
     moves = []
     king_moves = []
     captures = []
+    jumps = []
 
     def __init__(self, type: int) -> None:
         self.type = type
