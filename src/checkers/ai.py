@@ -47,10 +47,18 @@ class Ai(Player):
             print("--- Reached max depth or finished ---")
             print(depth)
             print(self.game.finished(board))
+            print(self.game.calculate_heuristic(board))
             return self.game.calculate_heuristic(board)
 
         # Human turn
         if turn == 0:
+            human_moves = [
+                [from_loc, to_loc]
+                for from_loc, data in board.human_move_set.items()
+                for to_loc in data["moves"]
+            ]
+            print(human_moves)
+
             max_eval = -inf
             for piece_location, data in board.human_move_set.items():
                 p_row, p_col = piece_location
@@ -77,8 +85,15 @@ class Ai(Player):
 
         # AI turn
         elif turn == 1:
+            ai_moves = [
+                [from_loc, to_loc]
+                for from_loc, data in board.ai_move_set.items()
+                for to_loc in data["moves"]
+            ]
+            print(ai_moves)
+
             min_eval = -inf
-            for piece_location, data in board.human_move_set.items():
+            for piece_location, data in board.ai_move_set.items():
                 p_row, p_col = piece_location
 
                 for move in data["moves"]:
