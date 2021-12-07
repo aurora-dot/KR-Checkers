@@ -29,7 +29,9 @@ class Game:
         elif player.selected_piece[0:2] == tile_location:
             player.selected_piece = None
         else:
-            valid = player.place_piece(tile_location, self.board)
+            valid = player.place_piece(
+                tile_location, self.board, player.selected_piece
+            )
             if valid:
                 player.selected_piece = None
                 self.turn = 0 if self.turn == 1 else 1
@@ -79,7 +81,7 @@ class Game:
                         scores[piece.type] += 50
 
         human_score, ai_score = scores
-        return human_score, ai_score
+        return ai_score - human_score
 
     def validate_move(self, piece, piece_location, tile_location, board):
         og_row, og_col = piece_location

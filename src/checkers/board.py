@@ -24,16 +24,9 @@ class Board:
             for col in range(8):
                 if (row + 1) % 2 == col % 2:
                     if row < 3:
-                        # self.pieces[row][-1].king = True
-                        if not (
-                            (row == 1 and col == 2)
-                            or (row == 1 and col == 4)
-                            or (row == 0 and col == 1)
-                        ):
-                            self.pieces[row].append(Piece(1))
-                            self.white_remaining += 1
-                        else:
-                            self.pieces[row].append(None)
+                        self.pieces[row].append(Piece(1))
+                        self.white_remaining += 1
+
                     elif row > 4:
                         self.pieces[row].append(Piece(0))
                         self.red_remaining += 1
@@ -45,9 +38,6 @@ class Board:
                 else:
                     self.board[row].append(0)
                     self.pieces[row].append(None)
-
-        self.pieces[4][5] = Piece(1)
-        self.white_remaining += 1
 
     def move_piece(self, piece_location, destination_location):
         piece_row, piece_col = piece_location

@@ -1,4 +1,4 @@
-# import copy
+import copy
 from time import sleep
 from .player import Player
 from math import inf
@@ -43,14 +43,61 @@ class Ai(Player):
         return False
 
     def minmax(self, turn, board, depth, alpha, beta):
-        if depth == 0 or self.game.finished(board):
+        if depth == 0 or self.game.finished(board) is not None:
+            print("--- Reached max depth or finished ---")
+            print(depth)
+            print(self.game.finished(board))
             return self.game.calculate_heuristic(board)
 
         # Human turn
         if turn == 0:
             max_eval = -inf
-            print(max_eval)
+            for piece_location, data in board.human_move_set.items():
+                p_row, p_col = piece_location
+                for move in data["moves"]:
+                    new_board = copy.deepcopy(board)
+                    print("\n--- h turn ---")
+                    print(new_board)
+                    print(move, (p_row, p_col, new_board.pieces[p_row][p_col]))
+                    self.place_piece(
+                        move,
+                        new_board,
+                        (p_row, p_col, new_board.pieces[p_row][p_col]),
+                    )
+                    self.game.generate_moves_for_board(new_board)
+                    minmax_eval = self.minmax(
+                        1, new_board, depth - 1, alpha, beta
+                    )
+                    max_minmax_eval = max(max_eval, minmax_eval)
+                    alpha = max(alpha, minmax_eval)
+                    if beta <= alpha:
+                        break
 
+            return max_minmax_eval
+
+        # AI turn
         elif turn == 1:
             min_eval = -inf
-            print(min_eval)
+            for piece_location, data in board.human_move_set.items():
+                p_row, p_col = piece_location
+
+                for move in data["moves"]:
+                    new_board = copy.deepcopy(board)
+                    print("\n --- a turn ---")
+                    print(new_board)
+                    print(move, (p_row, p_col, new_board.pieces[p_row][p_col]))
+                    self.place_piece(
+                        move,
+                        new_board,
+                        (p_row, p_col, new_board.pieces[p_row][p_col]),
+                    )
+                    self.game.generate_moves_for_board(new_board)
+                    minmax_eval = self.minmax(
+                        0, new_board, depth - 1, alpha, beta
+                    )
+                    min_minmax_eval = min(min_eval, minmax_eval)
+                    alpha = min(beta, minmax_eval)
+                    if beta <= alpha:
+                        break
+
+            return min_minmax_eval

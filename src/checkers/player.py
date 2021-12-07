@@ -13,9 +13,9 @@ class Player:
     def select_piece(self, tile_location):
         """Select piece from board"""
 
-    def place_piece(self, tile_location, board):
-        piece = self.selected_piece[2]
-        location = self.selected_piece[0:2]
+    def place_piece(self, tile_location, board, selected_piece):
+        piece = selected_piece[2]
+        location = selected_piece[0:2]
 
         if tile_location in piece.moves:
             board.move_piece(location, tile_location)
