@@ -31,15 +31,14 @@ class Game:
         else:
             valid = self.players[self.turn].place_piece(tile_location)
             if valid:
+                self.selected_piece = None
+                self.turn = 0 if self.turn == 1 else 1
                 (
                     self.all_human_available_moves,
                     self.all_ai_available_moves,
                 ) = self.all_valid_moves(self.board)
-                print("h: ", self.all_human_available_moves)
-                print("a: ", self.all_ai_available_moves)
-                print("---")
 
-    def calculate_heuristic(self):
+    def calculate_heuristic(self, board):
         total, human, ai = (0, 0, 0)
         print(total, human, ai)
 

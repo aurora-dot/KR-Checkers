@@ -50,7 +50,7 @@ Moving a piece while selection and move are in two separate steps.
 
 - Validation of moves (16 marks) 
     - [ ] No invalid moves carried out by the AI 
-    - [ ] Automatic check for valid user moves 
+    - [x] Automatic check for valid user moves 
     - [ ] Rejection of invalid user moves, with a specific explanation given 
     - [ ] Forced capture - if a player can capture an enemy piece they have to do so. If there is more than one capturing opportunity in the same turn, the user may choose which one to take.  
 

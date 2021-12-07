@@ -107,35 +107,36 @@ class Gui:
                         )
 
     def draw_valid_moves(self) -> None:
-        if self.checkers.selected_piece:
-            moves = self.checkers.selected_piece[2].moves
-        else:
-            moves = self.checkers.all_human_available_moves
+        if self.checkers.turn == 0:
+            if self.checkers.selected_piece:
+                moves = self.checkers.selected_piece[2].moves
+            else:
+                moves = self.checkers.all_human_available_moves
 
-        radius = (100 // 2) - 14
-        for move in moves:
-            row, col = move
+            radius = (100 // 2) - 14
+            for move in moves:
+                row, col = move
 
-            piece_x = (100 * col) + (100 // 2)
-            piece_y = (100 * row) + (100 // 2)
+                piece_x = (100 * col) + (100 // 2)
+                piece_y = (100 * row) + (100 // 2)
 
-            self.draw_circle(
-                self.window,
-                piece_x,
-                piece_y,
-                radius + 4,
-                self.colours["green"],
-            )
+                self.draw_circle(
+                    self.window,
+                    piece_x,
+                    piece_y,
+                    radius + 4,
+                    self.colours["green"],
+                )
 
-            self.draw_circle(
-                self.window,
-                piece_x,
-                piece_y,
-                radius,
-                self.colours[self.checkers.board.pieces[row][col].colour]
-                if self.checkers.board.pieces[row][col]
-                else self.colours["black"],
-            )
+                self.draw_circle(
+                    self.window,
+                    piece_x,
+                    piece_y,
+                    radius,
+                    self.colours[self.checkers.board.pieces[row][col].colour]
+                    if self.checkers.board.pieces[row][col]
+                    else self.colours["black"],
+                )
 
     def win_screen(self, text, colour_str):
         self.window.fill(self.colours["black"])
