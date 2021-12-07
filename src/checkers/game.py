@@ -14,13 +14,10 @@ class Game:
         self.human = Human(0, self.board, self)
         self.ai = Ai(1, self.board, self)
         self.players = [self.human, self.ai]
-        (
-            self.board.all_human_available_moves,
-            self.board.all_ai_available_moves,
-        ) = self.all_valid_moves(self.board)
+        self.generate_moves_for_board(self.board)
 
-        # print("h: ", self.all_human_available_moves)
-        # print("a: ", self.all_ai_available_moves)
+        # print("h: ", self.human_move_set)
+        # print("a: ", self.ai_move_set)
         # print(self.calculate_heuristic(self.board))
         # print("---")
 
@@ -35,16 +32,29 @@ class Game:
             valid = player.place_piece(tile_location, self.board)
             if valid:
                 player.selected_piece = None
-                self.turn = 0 if self.turn == 1 else 1
-                (
-                    self.board.all_human_available_moves,
-                    self.board.all_ai_available_moves,
-                ) = self.all_valid_moves(self.board)
+                # self.turn = 0 if self.turn == 1 else 1
+                self.generate_moves_for_board(self.board)
 
-                # print("h: ", self.all_human_available_moves)
-                # print("a: ", self.all_ai_available_moves)
+                # print("h: ", self.human_move_set)
+                # print("a: ", self.ai_move_set)
                 # print(self.calculate_heuristic(self.board))
                 # print("---")
+
+    def generate_moves_for_board(self, board: Board):
+        (
+            board.human_move_set,
+            board.ai_move_set,
+        ) = self.all_valid_moves(board)
+
+        board.all_human_moves = self.move_set_to_all_move_array(
+            board.human_move_set
+        )
+        board.all_ai_moves = self.move_set_to_all_move_array(board.ai_move_set)
+
+    def move_set_to_all_move_array(self, move_set):
+        return [
+            move for key in move_set.keys() for move in move_set[key]["moves"]
+        ]
 
     def calculate_heuristic(self, board: Board):
         scores = [0, 0]
@@ -128,56 +138,59 @@ class Game:
                     and j < 8
                     and i >= 0
                 ):
+                    passed = True
 
                     # Move filters
                     # Checks for friendly token blocks, can't jump over them
+
                     if (
                         (i == row + 2 and j == col + 2)
                         and board.pieces[row + 1][col + 1]
-                        and board.pieces[row + 1][col + 1].type == piece
+                        and board.pieces[row + 1][col + 1].type == piece.type
                     ):
                         # Friendly token blocking bottom right of token
-                        pass
-                    elif (
+                        passed = False
+                    if (
                         (i == row - 2 and j == col + 2)
                         and board.pieces[row - 1][col + 1]
-                        and board.pieces[row - 1][col + 1].type == piece
+                        and board.pieces[row - 1][col + 1].type == piece.type
                     ):
                         # Friendly token blocking top right of token
-                        pass
-                    elif (
+                        passed = False
+                    if (
                         (i == row + 2 and j == col - 2)
                         and board.pieces[row + 1][col - 1]
-                        and board.pieces[row + 1][col - 1].type == piece
+                        and board.pieces[row + 1][col - 1].type == piece.type
                     ):
                         # Friendly token blocking bottom left of token
-                        pass
-                    elif (
+                        passed = False
+                    if (
                         (i == row - 2 and j == col - 2)
                         and board.pieces[row - 1][col - 1]
-                        and board.pieces[row - 1][col - 1].type == piece
+                        and board.pieces[row - 1][col - 1].type == piece.type
                     ):
                         # Friendly token blocking top left of token
-                        pass
+                        passed = False
 
                     # Removes jump tiles if no enemy piece is there
-                    elif (i == row + 2 and j == col + 2) and not board.pieces[
+                    if (i == row + 2 and j == col + 2) and not board.pieces[
                         row + 1
                     ][col + 1]:
-                        pass
-                    elif (i == row + 2 and j == col - 2) and not board.pieces[
+                        passed = False
+                    if (i == row + 2 and j == col - 2) and not board.pieces[
                         row + 1
                     ][col - 1]:
-                        pass
-                    elif (i == row - 2 and j == col + 2) and not board.pieces[
+                        passed = False
+                    if (i == row - 2 and j == col + 2) and not board.pieces[
                         row - 1
                     ][col + 1]:
-                        pass
-                    elif (i == row - 2 and j == col - 2) and not board.pieces[
+                        passed = False
+                    if (i == row - 2 and j == col - 2) and not board.pieces[
                         row - 1
                     ][col - 1]:
-                        pass
-                    else:
+                        passed = False
+
+                    if passed:
                         # Validates if the piece can
                         #   actually be moved to that spot
                         (
@@ -220,8 +233,8 @@ class Game:
             return False, False
 
     def all_valid_moves(self, board):
-        all_human_available_moves = {}
-        all_ai_available_moves = {}
+        human_move_set = {}
+        ai_move_set = {}
 
         for i in range(8):
             for j in range(8):
@@ -239,30 +252,31 @@ class Game:
                     piece.captures = captures
 
                     if piece.type == self.human.type:
-                        all_human_available_moves[(i, j)] = {
+                        human_move_set[(i, j)] = {
                             "moves": moves,
                             "king_moves": king_moves,
                             "captures": captures,
                         }
                     elif piece.type == self.ai.type:
-                        all_ai_available_moves[(i, j)] = {
+                        ai_move_set[(i, j)] = {
                             "moves": moves,
                             "king_moves": king_moves,
                             "captures": captures,
                         }
 
-        return all_human_available_moves, all_ai_available_moves
+        return human_move_set, ai_move_set
 
-    def finished(
-        self, board, all_human_available_moves, all_ai_available_moves
-    ) -> int or None:
+    def finished(self, board) -> int or None:
+
+        print(board.ai_move_set)
+
         # if opponent has no legal moves or no remaining pieces they have won,
         # draw if neither side has a legal move
-        if all_ai_available_moves == [] and all_human_available_moves == []:
+        if board.all_ai_moves == [] and board.all_human_moves == []:
             return -1
-        elif board.red_remaining <= 0 or all_ai_available_moves == []:
+        elif board.red_remaining <= 0 or board.all_ai_moves == []:
             return 0
-        elif board.white_remaining <= 0 or all_human_available_moves == []:
+        elif board.white_remaining <= 0 or board.all_human_moves == []:
             return 1
         else:
             return None

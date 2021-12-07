@@ -23,8 +23,6 @@ class Gui:
         if (
             self.checkers.finished(
                 self.checkers.board,
-                self.checkers.board.all_human_available_moves,
-                self.checkers.board.all_ai_available_moves,
             )
             is None
         ):
@@ -112,12 +110,7 @@ class Gui:
             if self.checkers.human.selected_piece:
                 moves = self.checkers.human.selected_piece[2].moves
             else:
-                available_moves = self.checkers.board.all_human_available_moves
-                moves = [
-                    move
-                    for key in available_moves.keys()
-                    for move in available_moves[key]["moves"]
-                ]
+                moves = self.checkers.board.all_human_moves
 
             radius = (100 // 2) - 14
             for move in moves:

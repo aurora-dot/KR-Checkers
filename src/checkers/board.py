@@ -7,8 +7,11 @@ class Board:
     white_remaining = 0
     red_remaining = 0
 
-    all_human_available_moves = {}
-    all_ai_available_moves = {}
+    human_move_set = {}
+    ai_move_set = {}
+
+    all_human_moves = []
+    all_ai_moves = []
 
     def __init__(self) -> None:
         self.setup_board()
