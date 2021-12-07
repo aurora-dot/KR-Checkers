@@ -25,8 +25,8 @@ def play_game():
 
         f = gui.checkers.finished(
             gui.checkers.board,
-            gui.checkers.all_human_available_moves,
-            gui.checkers.all_ai_available_moves,
+            gui.checkers.board.all_human_available_moves,
+            gui.checkers.board.all_ai_available_moves,
         )
         if f == -1:
             gui.win_screen("Draw", "orange")

@@ -15,14 +15,14 @@ class Game:
         self.ai = Ai(1, self.board, self)
         self.players = [self.human, self.ai]
         (
-            self.all_human_available_moves,
-            self.all_ai_available_moves,
+            self.board.all_human_available_moves,
+            self.board.all_ai_available_moves,
         ) = self.all_valid_moves(self.board)
 
-        print("h: ", self.all_human_available_moves)
-        print("a: ", self.all_ai_available_moves)
-        print(self.calculate_heuristic(self.board))
-        print("---")
+        # print("h: ", self.all_human_available_moves)
+        # print("a: ", self.all_ai_available_moves)
+        # print(self.calculate_heuristic(self.board))
+        # print("---")
 
     def take_turn(self, tile_location):
         player = self.players[self.turn]
@@ -35,16 +35,16 @@ class Game:
             valid = player.place_piece(tile_location, self.board)
             if valid:
                 player.selected_piece = None
-                # self.turn = 0 if self.turn == 1 else 1
+                self.turn = 0 if self.turn == 1 else 1
                 (
-                    self.all_human_available_moves,
-                    self.all_ai_available_moves,
+                    self.board.all_human_available_moves,
+                    self.board.all_ai_available_moves,
                 ) = self.all_valid_moves(self.board)
 
-                print("h: ", self.all_human_available_moves)
-                print("a: ", self.all_ai_available_moves)
-                print(self.calculate_heuristic(self.board))
-                print("---")
+                # print("h: ", self.all_human_available_moves)
+                # print("a: ", self.all_ai_available_moves)
+                # print(self.calculate_heuristic(self.board))
+                # print("---")
 
     def calculate_heuristic(self, board: Board):
         scores = [0, 0]
@@ -220,8 +220,8 @@ class Game:
             return False, False
 
     def all_valid_moves(self, board):
-        all_human_available_moves = []
-        all_ai_available_moves = []
+        all_human_available_moves = {}
+        all_ai_available_moves = {}
 
         for i in range(8):
             for j in range(8):
@@ -239,9 +239,17 @@ class Game:
                     piece.captures = captures
 
                     if piece.type == self.human.type:
-                        all_human_available_moves += moves
+                        all_human_available_moves[(i, j)] = {
+                            "moves": moves,
+                            "king_moves": king_moves,
+                            "captures": captures,
+                        }
                     elif piece.type == self.ai.type:
-                        all_ai_available_moves += moves
+                        all_ai_available_moves[(i, j)] = {
+                            "moves": moves,
+                            "king_moves": king_moves,
+                            "captures": captures,
+                        }
 
         return all_human_available_moves, all_ai_available_moves
 

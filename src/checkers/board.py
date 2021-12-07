@@ -7,6 +7,9 @@ class Board:
     white_remaining = 0
     red_remaining = 0
 
+    all_human_available_moves = {}
+    all_ai_available_moves = {}
+
     def __init__(self) -> None:
         self.setup_board()
 
@@ -60,3 +63,15 @@ class Board:
             self.white_remaining -= 1
         elif piece_type == 1:
             self.red_remaining -= 1
+
+    def __str__(self) -> str:
+        out = ""
+        for row in range(len(self.board)):
+            for col in range(len(self.board[0])):
+                if self.pieces[row][col]:
+                    out += str(self.pieces[row][col]) + " "
+                else:
+                    out += str(self.board[row][col]) + " "
+            out += "\n"
+
+        return out
