@@ -171,52 +171,8 @@ class Game:
 
                             if has_captured:
                                 captures[move_location] = removed_piece
-                                # jumps[(row, col)] = self.jump(
-                                #   piece, (row, col), move_location, board)
 
         return valid_moves, king_creation_moves, captures
-
-    # def jump(self, piece, old_location, new_location, board):
-    #     og_row, og_col = old_location
-    #     row, col = new_location
-    #     j = []
-
-    #     if (
-    #         row + 2 <= 7
-    #         and col + 2 <= 7
-    #         and not board.pieces[row + 2][col + 2]
-    #         and board.pieces[row + 1][col + 1]
-    #         and board.pieces[row + 1][col + 1].type != piece.type
-    #     ):
-
-    #     if (
-    #         row - 2 >= 0
-    #         and col + 2 <= 7
-    #         and not board.pieces[row - 2][col + 2]
-    #         and board.pieces[row - 1][col + 1]
-    #         and board.pieces[row - 1][col + 1].type != piece.type
-    #     ):
-
-    #     if (
-    #         row + 2 <= 7
-    #         and col - 2 >= 0
-    #         and not board.pieces[row + 2][col - 2]
-    #         and board.pieces[row + 1][col - 1]
-    #         and board.pieces[row + 1][col - 1].type != piece.type
-    #     ):
-
-    #     if (
-    #         row - 2 >= 0
-    #         and col - 2 >= 0
-    #         and not board.pieces[row - 2][col - 2]
-    #         and board.pieces[row - 1][col - 1]
-    #         and board.pieces[row - 1][col - 1].type != piece.type
-    #     ):
-
-    #     if len(j) != 1:
-    #         return None
-    #     else:
-    #         return {new_location: j[0]}
 
     def captured(self, piece_location, tile_location):
         # TODO: check if piece is captured,
@@ -247,14 +203,12 @@ class Game:
                         moves,
                         king_moves,
                         captures,
-                        # jumps
                     ) = self.all_valid_moves_for_piece(
                         i, j, board.pieces[i][j], board
                     )
                     piece.moves = moves
                     piece.king_moves = king_moves
                     piece.captures = captures
-                    # piece.jumps = jumps
 
                     if piece.type == self.human.type:
                         all_human_available_moves += moves
