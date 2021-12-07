@@ -9,4 +9,5 @@ class Human(Player):
         row, col = tile_location
         piece = self.board.pieces[row][col]
         if piece and piece.type == self.type:
-            self.game.selected_piece = (row, col, self.board.pieces[row][col])
+            self.selected_piece = (row, col, self.board.pieces[row][col])
+            print(self.select_piece)

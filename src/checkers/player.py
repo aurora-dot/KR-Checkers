@@ -2,34 +2,32 @@ import abc
 
 
 class Player:
+    selected_piece = None
+
     def __init__(self, type, board, game) -> None:
         self.type = type
         self.board = board
         self.game = game
 
-    def minmax(self, turn, alpha, beta):
-        pass
-
     @abc.abstractmethod
     def select_piece(self, tile_location):
         """Select piece from board"""
 
-    def place_piece(self, tile_location):
-        piece = self.game.selected_piece[2]
-        location = self.game.selected_piece[0:2]
+    def place_piece(self, tile_location, board):
+        piece = self.selected_piece[2]
+        location = self.selected_piece[0:2]
 
         if tile_location in piece.moves:
-            self.board.move_piece(location, tile_location)
+            board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
                 piece.king = True
             if tile_location in piece.captures:
                 captured_location = piece.captures[tile_location]
-                self.board.remove_piece(captured_location)
+                board.remove_piece(captured_location)
 
             # Check for jumps here and make them maybe
 
-            self.game.selected_piece = None
-            self.game.all_valid_moves(self.board)
+            self.selected_piece = None
 
             return True
 

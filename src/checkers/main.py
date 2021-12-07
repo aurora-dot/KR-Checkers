@@ -2,7 +2,7 @@ import pygame
 from sys import exit
 from .gui import Gui
 
-fps = 10
+fps = 60
 res = (1000, 800)
 window = pygame.display.set_mode(res)
 pygame.display.set_caption("K&R: Checkers!")

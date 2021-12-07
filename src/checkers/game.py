@@ -24,15 +24,17 @@ class Game:
         print("---")
 
     def take_turn(self, tile_location):
-        if not self.selected_piece:
-            self.players[self.turn].select_piece(tile_location)
-        elif self.selected_piece[0:2] == tile_location:
-            self.selected_piece = None
+        player = self.players[self.turn]
+
+        if not player.selected_piece:
+            player.select_piece(tile_location)
+        elif player.selected_piece[0:2] == tile_location:
+            player.selected_piece = None
         else:
-            valid = self.players[self.turn].place_piece(tile_location)
+            valid = player.place_piece(tile_location, self.board)
             if valid:
-                self.selected_piece = None
-                self.turn = 0 if self.turn == 1 else 1
+                player.selected_piece = None
+                # self.turn = 0 if self.turn == 1 else 1
                 (
                     self.all_human_available_moves,
                     self.all_ai_available_moves,
