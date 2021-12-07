@@ -1,3 +1,4 @@
+import copy
 from .player import Player
 from math import inf
 
@@ -36,4 +37,20 @@ class Ai(Player):
         return False
 
     def minmax(self, turn, board, depth, alpha, beta):
+        new_board = copy.deepcopy(board)
+        (
+            all_human_available_moves,
+            all_ai_available_moves,
+        ) = self.board.all_valid_moves(new_board)
+
+        if depth == 0 or self.game.finished(
+            new_board, all_human_available_moves, all_ai_available_moves
+        ):
+            return self.game.calculate_heuristic(new_board)
+
+        # Human turn
+        if turn == 0:
+            pass
+        elif turn == 1:
+            pass
         pass
