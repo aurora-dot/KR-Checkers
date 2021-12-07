@@ -20,7 +20,14 @@ class Gui:
         self.checkers = Game()
 
     def update_window(self) -> None:
-        if self.checkers.finished() is None:
+        if (
+            self.checkers.finished(
+                self.checkers.board,
+                self.checkers.all_ai_available_moves,
+                self.checkers.all_human_available_moves,
+            )
+            is None
+        ):
             self.draw_board()
             self.draw_pieces()
             self.draw_valid_moves()

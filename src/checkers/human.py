@@ -26,7 +26,7 @@ class Human(Player):
             # Check for jumps here and make them maybe
 
             self.game.selected_piece = None
-            self.game.all_valid_moves()
+            self.game.all_valid_moves(self.board)
 
             return True
 

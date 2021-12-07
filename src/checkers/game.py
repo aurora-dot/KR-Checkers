@@ -17,7 +17,7 @@ class Game:
         (
             self.all_human_available_moves,
             self.all_ai_available_moves,
-        ) = self.all_valid_moves()
+        ) = self.all_valid_moves(self.board)
 
         print("h: ", self.all_human_available_moves)
         print("a: ", self.all_ai_available_moves)
@@ -34,7 +34,7 @@ class Game:
                 (
                     self.all_human_available_moves,
                     self.all_ai_available_moves,
-                ) = self.all_valid_moves()
+                ) = self.all_valid_moves(self.board)
                 print("h: ", self.all_human_available_moves)
                 print("a: ", self.all_ai_available_moves)
                 print("---")
@@ -43,7 +43,7 @@ class Game:
         total, human, ai = (0, 0, 0)
         print(total, human, ai)
 
-    def validate_move(self, piece, piece_location, tile_location):
+    def validate_move(self, piece, piece_location, tile_location, board):
         og_row, og_col = piece_location
         row, col = tile_location
 
@@ -55,10 +55,9 @@ class Game:
             and row >= 0
             and col < 8
             and col >= 0
-            and self.board.board[row][col] == 1
-            and self.board.pieces[row][col]
-            != self.board.pieces[og_row][og_col]
-            and (not self.board.pieces[row][col])
+            and board.board[row][col] == 1
+            and board.pieces[row][col] != board.pieces[og_row][og_col]
+            and (not board.pieces[row][col])
         ):
 
             if not piece.king:
@@ -83,7 +82,7 @@ class Game:
         else:
             return False, False, None
 
-    def all_valid_moves_for_piece(self, row, col, piece):
+    def all_valid_moves_for_piece(self, row, col, piece, board):
         valid_moves = []
         king_creation_moves = []
         captures = {}
@@ -106,49 +105,49 @@ class Game:
                     # Checks for friendly token blocks, can't jump over them
                     if (
                         (i == row + 2 and j == col + 2)
-                        and self.board.pieces[row + 1][col + 1]
-                        and self.board.pieces[row + 1][col + 1].type == piece
+                        and board.pieces[row + 1][col + 1]
+                        and board.pieces[row + 1][col + 1].type == piece
                     ):
                         # Friendly token blocking bottom right of token
                         pass
                     elif (
                         (i == row - 2 and j == col + 2)
-                        and self.board.pieces[row - 1][col + 1]
-                        and self.board.pieces[row - 1][col + 1].type == piece
+                        and board.pieces[row - 1][col + 1]
+                        and board.pieces[row - 1][col + 1].type == piece
                     ):
                         # Friendly token blocking top right of token
                         pass
                     elif (
                         (i == row + 2 and j == col - 2)
-                        and self.board.pieces[row + 1][col - 1]
-                        and self.board.pieces[row + 1][col - 1].type == piece
+                        and board.pieces[row + 1][col - 1]
+                        and board.pieces[row + 1][col - 1].type == piece
                     ):
                         # Friendly token blocking bottom left of token
                         pass
                     elif (
                         (i == row - 2 and j == col - 2)
-                        and self.board.pieces[row - 1][col - 1]
-                        and self.board.pieces[row - 1][col - 1].type == piece
+                        and board.pieces[row - 1][col - 1]
+                        and board.pieces[row - 1][col - 1].type == piece
                     ):
                         # Friendly token blocking top left of token
                         pass
 
                     # Removes jump tiles if no enemy piece is there
-                    elif (
-                        i == row + 2 and j == col + 2
-                    ) and not self.board.pieces[row + 1][col + 1]:
+                    elif (i == row + 2 and j == col + 2) and not board.pieces[
+                        row + 1
+                    ][col + 1]:
                         pass
-                    elif (
-                        i == row + 2 and j == col - 2
-                    ) and not self.board.pieces[row + 1][col - 1]:
+                    elif (i == row + 2 and j == col - 2) and not board.pieces[
+                        row + 1
+                    ][col - 1]:
                         pass
-                    elif (
-                        i == row - 2 and j == col + 2
-                    ) and not self.board.pieces[row - 1][col + 1]:
+                    elif (i == row - 2 and j == col + 2) and not board.pieces[
+                        row - 1
+                    ][col + 1]:
                         pass
-                    elif (
-                        i == row - 2 and j == col - 2
-                    ) and not self.board.pieces[row - 1][col - 1]:
+                    elif (i == row - 2 and j == col - 2) and not board.pieces[
+                        row - 1
+                    ][col - 1]:
                         pass
                     else:
                         # Validates if the piece can
@@ -158,9 +157,7 @@ class Game:
                             made_king,
                             move_location,
                         ) = self.validate_move(
-                            piece,
-                            (row, col),
-                            (i, j),
+                            piece, (row, col), (i, j), board
                         )
 
                         if is_valid:
@@ -176,6 +173,9 @@ class Game:
                                 captures[move_location] = removed_piece
 
         return valid_moves, king_creation_moves, captures
+
+    def jump(self, piece_location):
+        row, col = piece_location
 
     def captured(self, piece_location, tile_location):
         # TODO: check if piece is captured,
@@ -194,20 +194,20 @@ class Game:
         else:
             return False, False
 
-    def all_valid_moves(self):
+    def all_valid_moves(self, board):
         all_human_available_moves = []
         all_ai_available_moves = []
 
         for i in range(8):
             for j in range(8):
-                piece = self.board.pieces[i][j]
+                piece = board.pieces[i][j]
                 if piece:
                     (
                         moves,
                         king_moves,
                         captures,
                     ) = self.all_valid_moves_for_piece(
-                        i, j, self.board.pieces[i][j]
+                        i, j, board.pieces[i][j], board
                     )
                     piece.moves = moves
                     piece.king_moves = king_moves
@@ -220,22 +220,16 @@ class Game:
 
         return all_human_available_moves, all_ai_available_moves
 
-    def finished(self) -> int or None:
+    def finished(
+        self, board, all_ai_available_moves, all_human_available_moves
+    ) -> int or None:
         # if opponent has no legal moves or no remaining pieces they have won,
         # draw if neither side has a legal move
-        if (
-            self.all_ai_available_moves == []
-            and self.all_human_available_moves == []
-        ):
+        if all_ai_available_moves == [] and all_human_available_moves == []:
             return -1
-        elif (
-            self.board.red_remaining <= 0 or self.all_ai_available_moves == []
-        ):
+        elif board.red_remaining <= 0 or all_ai_available_moves == []:
             return 0
-        elif (
-            self.board.white_remaining <= 0
-            or self.all_human_available_moves == []
-        ):
+        elif board.white_remaining <= 0 or all_human_available_moves == []:
             return 1
         else:
             return None

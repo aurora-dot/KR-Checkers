@@ -23,7 +23,11 @@ def play_game():
     while playing:
         clock.tick(fps)
 
-        f = gui.checkers.finished()
+        f = gui.checkers.finished(
+            gui.checkers.board,
+            gui.checkers.all_ai_available_moves,
+            gui.checkers.all_human_available_moves,
+        )
         if f == -1:
             gui.win_screen("Draw", "orange")
         elif f == 0:
