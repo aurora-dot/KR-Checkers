@@ -29,15 +29,14 @@ class Player:
             board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
                 piece.king = True
-            # if tile_location in piece.captures:
-            #     print(piece.captures[tile_location])
-            #     captured_location = piece.captures[tile_location]
-            #     board.remove_piece(captured_location)
+            if tile_location in piece.captures:
+                captured_location = piece.captures[tile_location]
+                board.remove_piece(captured_location)
 
             # Check for jumps here and make them maybe
 
             self.selected_piece = None
-            self.game.generate_moves_for_board(self.board)
+            self.game.generate_moves_for_board(board)
 
             print(board)
 

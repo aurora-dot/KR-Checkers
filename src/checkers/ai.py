@@ -130,7 +130,7 @@ class Ai(Player):
             # Check for jumps here and make them maybe
 
             self.selected_piece = None
-            self.game.generate_moves_for_board(self.board)
+            self.game.generate_moves_for_board(board)
 
             return True
 
