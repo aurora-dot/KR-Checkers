@@ -1,6 +1,8 @@
 import pygame
 from sys import exit
 from .gui import Gui
+import tkinter as tk
+
 
 fps = 30
 res = (1000, 800)
@@ -70,7 +72,7 @@ def play_game():
                         # Instructions
 
                         if pos[1] >= 7 and pos[1] <= 80:
-                            print("Instruction")
+                            runTk()
 
                         # Easy
                         if pos[1] >= 95 and pos[1] <= 170:
@@ -91,6 +93,14 @@ def play_game():
                             )
 
         gui.update_window()
+
+
+def runTk():
+    root = tk.Tk()
+    btn = tk.Label(root, text="Start")
+    btn.bind("<Button-1>", lambda x: root.destroy())
+    btn.pack()
+    root.mainloop()
 
 
 main()
