@@ -13,6 +13,9 @@ class Ai(Player):
     def select_piece(self, tile_location):
         self.started = True
 
+        print(repr(self.board))
+        print(self.board.pieces)
+
         result = self.minmax(
             1, copy.deepcopy(self.board), self.depth, -inf, inf
         )
@@ -123,9 +126,9 @@ class Ai(Player):
             board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
                 piece.king = True
-            # if tile_location in piece.captures:
-            #     captured_location = piece.captures[tile_location]
-            #     board.remove_piece(captured_location)
+            if tile_location in piece.captures:
+                captured_location = piece.captures[tile_location]
+                self.remove_piece(captured_location, board)
 
             # Check for jumps here and make them maybe
 
@@ -135,3 +138,17 @@ class Ai(Player):
             return True
 
         return False
+
+    def remove_piece(self, captured_location, board):
+        print()
+        # print("HERE")
+        piece_row, piece_col = captured_location
+        print(repr(board.pieces[piece_row][piece_col]))
+        print(repr(board))
+        # piece_type = board.pieces[piece_row][piece_col].type
+        # board.pieces[piece_row][piece_col] = None
+
+        # if piece_type == 0:
+        #     board.white_remaining -= 1
+        # elif piece_type == 1:
+        #     board.red_remaining -= 1
