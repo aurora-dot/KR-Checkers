@@ -21,11 +21,6 @@ class Player:
         piece = selected_piece[2]
         location = selected_piece[0:2]
 
-        # print(piece)
-        # print(piece.moves)
-        # print(piece.king_moves)
-        # print(piece.captures)
-
         if tile_location in piece.moves:
             board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
@@ -39,8 +34,6 @@ class Player:
             self.game.taken_moves.append((location, tile_location))
             self.selected_piece = None
             self.game.generate_moves_for_board(board)
-
-            # print(board)
 
             return True
 

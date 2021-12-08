@@ -13,15 +13,10 @@ class Ai(Player):
     def select_piece(self, tile_location):
         self.started = True
 
-        # print(repr(self.board))
-        # print(self.board.pieces)
-
         new_board = copy.deepcopy(self.board)
         new_board.pieces = copy.deepcopy(self.board.pieces)
 
         self.minmax(1, copy.deepcopy(new_board), self.depth, -inf, inf)
-
-        # print(result)
 
         self.selected_piece = (
             self.move[0][0],
@@ -63,8 +58,6 @@ class Ai(Player):
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
 
-                    # print(move)
-
                     new_board = copy.deepcopy(self.board)
                     new_board.pieces = copy.deepcopy(self.board.pieces)
 
@@ -100,8 +93,6 @@ class Ai(Player):
                 for move in ai_moves:
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
-
-                    # print(move)
 
                     new_board = copy.deepcopy(self.board)
                     new_board.pieces = copy.deepcopy(self.board.pieces)

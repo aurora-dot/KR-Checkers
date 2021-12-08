@@ -19,11 +19,6 @@ class Game:
         self.generate_moves_for_board(self.board)
         self.taken_moves = []
 
-        # print("h: ", self.human_move_set)
-        # print("a: ", self.ai_move_set)
-        # print(self.calculate_heuristic(self.board))
-        # print("---")
-
     def take_turn(self, tile_location):
         player = self.players[self.turn]
 
@@ -32,19 +27,11 @@ class Game:
         elif player.selected_piece[0:2] == tile_location:
             player.selected_piece = None
         else:
-            # print(player.selected_piece, tile_location)
             valid = player.place_piece(
                 tile_location, self.board, player.selected_piece
             )
             if valid:
-                # print("yay")
                 self.turn = 0 if self.turn == 1 else 1
-                # print(self.taken_moves)
-
-                # print("h: ", self.human_move_set)
-                # print("a: ", self.ai_move_set)
-                # print(self.calculate_heuristic(self.board))
-                # print("---")
 
     def generate_moves_for_board(self, board: Board):
         (
@@ -273,12 +260,6 @@ class Game:
         return human_move_set, ai_move_set
 
     def finished(self, board) -> int or None:
-        # moves_length = len(self.taken_moves)
-        # if moves_length >= 8:
-        #     last_8_moves = self.taken_moves[-8:]
-        #     print(last_8_moves)
-
-        # check for repeat of move three times
         if board.all_ai_moves == [] and board.all_human_moves == []:
             return -1
         elif board.red_remaining <= 0 or board.all_ai_moves == []:

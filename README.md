@@ -20,18 +20,13 @@ Please make sure you have these installed:
 
 Have fun!
 
-## Todo
-Moving a piece while selection and move are in two separate steps.
-
-- [ ] infinate loop of moves draw
-
 ## Guidelines Overview
 - Gameplay (20 marks) 
     - [x] Interactive checkers gameplay (Human vs. Computer) of some sort 
     - [x] Different levels of verifiably effective AI cleverness, adjustable by the user  
  
 - Search algorithm (20 marks) 
-    - [idk] Appropriate and efficient state representation 
+    - [ ] Appropriate and efficient state representation 
     - [x] Reasonable successor function to generate AI moves 
     - [x] Minimax evaluation 
     - [x] Alpha-Beta pruning 
@@ -40,14 +35,14 @@ Moving a piece while selection and move are in two separate steps.
 - Validation of moves (16 marks) 
     - [x] No invalid moves carried out by the AI 
     - [x] Automatic check for valid user moves 
-    - [nn] Rejection of invalid user moves, with a specific explanation given 
-    - [n] Forced capture - if a player can capture an enemy piece they have to do so. If there is more than one capturing opportunity in the same turn, the user may choose which one to take.  
+    - [ ] Rejection of invalid user moves, with a specific explanation given 
+    - [ ] Forced capture - if a player can capture an enemy piece they have to do so. If there is more than one capturing opportunity in the same turn, the user may choose which one to take.  
 
 - Other features (20 marks) 
-    - [nn] Multi-leg capturing moves for the user 
-    - [nn] Multi-leg capturing moves for the AI 
+    - [ ] Multi-leg capturing moves for the user 
+    - [ ] Multi-leg capturing moves for the AI 
     - [x] King conversion at baseline (The king's row) as per the normal rules 
-    - [n] Regicide - if a normal piece manages to capture a king, it is instantly crowned king and then the current turn ends. 
+    - [ ] Regicide - if a normal piece manages to capture a king, it is instantly crowned king and then the current turn ends. 
     - [x] Some kind of help feature that can be enabled at the user's request to get hints about available moves, given the current game state. Sophisticated implementations should employ the AI functionality to make suggestions on optimal moves. 
  
 - Human-Computer Interface (up to 4 marks each)  
@@ -55,6 +50,6 @@ Moving a piece while selection and move are in two separate steps.
     - [x] The interface properly updates the display after completed moves (User and AI moves) 
     - [x] Fully interactive GUI that uses graphics (You are permitted to use tools that make it easier to construct a GUI by generating the necessary code, such as layout managers provided with Java IDEs like Eclipse or NetBeans)  
     - [x] Mouse interaction focus, e.g., click to select & click to place, or drag & drop (better) 
-    - [nn] GUI pauses appropriately to show the intermediate steps of any multi-leg moves 
+    - [ ] GUI pauses appropriately to show the intermediate steps of any multi-leg moves 
     - [x] Dedicated display of the rules (e.g., a corresponding button opening a pop-up window) 
 
