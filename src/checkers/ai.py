@@ -4,7 +4,7 @@ from math import inf
 
 
 class Ai(Player):
-    depth = 1
+    depth = 6
     level = 1
 
     def __init__(self, type, board, game) -> None:
@@ -16,8 +16,11 @@ class Ai(Player):
         print(repr(self.board))
         print(self.board.pieces)
 
+        new_board = copy.deepcopy(self.board)
+        new_board.pieces = copy.deepcopy(self.board.pieces)
+
         result = self.minmax(
-            1, copy.deepcopy(self.board), self.depth, -inf, inf
+            1, copy.deepcopy(new_board), self.depth, -inf, inf
         )
 
         print(result)
@@ -64,15 +67,21 @@ class Ai(Player):
 
                     print(move)
 
-                    new_board = copy.deepcopy(board)
+                    new_board = copy.deepcopy(self.board)
+                    new_board.pieces = copy.deepcopy(self.board.pieces)
 
-                    self.ai_place_piece(
+                    valid = self.ai_place_piece(
                         (n_row, n_col),
                         new_board,
                         (p_row, p_row, new_board.pieces[p_row][p_col]),
                     )
 
-                    score = self.minmax(1, new_board, depth - 1, alpha, beta)
+                    if valid:
+                        score = self.minmax(
+                            1, new_board, depth - 1, alpha, beta
+                        )
+                    else:
+                        score = -inf
 
                     max_score = max(score, max_score)
                     alpha = max(alpha, score)
@@ -96,14 +105,21 @@ class Ai(Player):
 
                     print(move)
 
-                    new_board = copy.deepcopy(board)
+                    new_board = copy.deepcopy(self.board)
+                    new_board.pieces = copy.deepcopy(self.board.pieces)
 
-                    self.ai_place_piece(
+                    valid = self.ai_place_piece(
                         (n_row, n_col),
                         new_board,
                         (p_row, p_row, new_board.pieces[p_row][p_col]),
                     )
-                    score = self.minmax(0, new_board, depth - 1, alpha, beta)
+
+                    if valid:
+                        score = self.minmax(
+                            0, new_board, depth - 1, alpha, beta
+                        )
+                    else:
+                        score = inf
                     if score < min_score and self.depth == depth:
                         self.move = move
                     min_score = min(score, min_score)
@@ -123,32 +139,28 @@ class Ai(Player):
         # print(piece.captures)
 
         if tile_location in piece.moves:
+            if piece.type == 1 and piece.captures:
+                print("-------")
+                print(location)
+                print(tile_location)
+                print(board)
+                print(board.board[location[0]][location[1]])
             board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
                 piece.king = True
             if tile_location in piece.captures:
+
                 captured_location = piece.captures[tile_location]
-                self.remove_piece(captured_location, board)
+                board.remove_piece(captured_location)
+                if piece.type == 1:
+                    print(captured_location)
+                    print(board)
+                    print("-------")
 
             # Check for jumps here and make them maybe
 
-            self.selected_piece = None
             self.game.generate_moves_for_board(board)
 
             return True
 
         return False
-
-    def remove_piece(self, captured_location, board):
-        print()
-        # print("HERE")
-        piece_row, piece_col = captured_location
-        print(repr(board.pieces[piece_row][piece_col]))
-        print(repr(board))
-        # piece_type = board.pieces[piece_row][piece_col].type
-        # board.pieces[piece_row][piece_col] = None
-
-        # if piece_type == 0:
-        #     board.white_remaining -= 1
-        # elif piece_type == 1:
-        #     board.red_remaining -= 1

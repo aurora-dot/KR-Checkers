@@ -67,12 +67,12 @@ class Game:
 
                 if piece:
                     # Pieces
-                    scores[piece.type] += 200
+                    scores[piece.type] += 5
 
                     # King
                     if piece.king:
                         scores[piece.type] += 300
-                        scores[1 if piece.type == 0 else 0] -= 300
+                        scores[1 if piece.type == 0 else 0] -= 500
 
                     # Backrow
                     if (piece.type == 0 and row == 7) or (
