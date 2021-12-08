@@ -4,7 +4,7 @@ from math import inf
 
 
 class Ai(Player):
-    depth = 6
+    depth = 1
     level = 1
 
     def __init__(self, type, board, game) -> None:
@@ -131,18 +131,7 @@ class Ai(Player):
         piece = selected_piece[2]
         location = selected_piece[0:2]
 
-        # print(piece)
-        # print(piece.moves)
-        # print(piece.king_moves)
-        # print(piece.captures)
-
         if tile_location in piece.moves:
-            # if piece.type == 1 and piece.captures:
-            #     print("-------")
-            #     print(location)
-            #     print(tile_location)
-            #     print(board)
-            #     print(board.board[location[0]][location[1]])
             board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
                 piece.king = True
@@ -150,12 +139,6 @@ class Ai(Player):
 
                 captured_location = piece.captures[tile_location]
                 board.remove_piece(captured_location)
-                # if piece.type == 1:
-                #     print(captured_location)
-                #     print(board)
-                #     print("-------")
-
-            # Check for jumps here and make them maybe
 
             self.game.generate_moves_for_board(board)
 

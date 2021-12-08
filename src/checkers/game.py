@@ -4,6 +4,8 @@ from .human import Human
 
 
 class Game:
+    show_valid_moves = False
+
     def __init__(self) -> None:
         self.start_new_game()
 
@@ -15,6 +17,7 @@ class Game:
         self.ai = Ai(1, self.board, self)
         self.players = [self.human, self.ai]
         self.generate_moves_for_board(self.board)
+        self.taken_moves = []
 
         # print("h: ", self.human_move_set)
         # print("a: ", self.ai_move_set)
@@ -36,6 +39,7 @@ class Game:
             if valid:
                 # print("yay")
                 self.turn = 0 if self.turn == 1 else 1
+                # print(self.taken_moves)
 
                 # print("h: ", self.human_move_set)
                 # print("a: ", self.ai_move_set)
@@ -269,6 +273,12 @@ class Game:
         return human_move_set, ai_move_set
 
     def finished(self, board) -> int or None:
+        # moves_length = len(self.taken_moves)
+        # if moves_length >= 8:
+        #     last_8_moves = self.taken_moves[-8:]
+        #     print(last_8_moves)
+
+        # check for repeat of move three times
         if board.all_ai_moves == [] and board.all_human_moves == []:
             return -1
         elif board.red_remaining <= 0 or board.all_ai_moves == []:

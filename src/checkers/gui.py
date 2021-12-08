@@ -13,6 +13,7 @@ class Gui:
         "pink": (255, 121, 198),
         "orange": (255, 184, 108),
         "green": (80, 250, 123),
+        "grey": (68, 71, 90),
     }
 
     def __init__(self, window) -> None:
@@ -112,7 +113,7 @@ class Gui:
                         )
 
     def draw_valid_moves(self) -> None:
-        if self.checkers.turn == 0:
+        if self.checkers.turn == 0 and self.checkers.show_valid_moves:
             if self.checkers.players[self.checkers.turn].selected_piece:
                 moves = (
                     self.checkers.players[self.checkers.turn]
@@ -180,13 +181,118 @@ class Gui:
         )
 
     def draw_side_bar(self) -> None:
+        sf = pygame.font.Font(
+            os.path.dirname(__file__) + "/resources/font.ttf",
+            20,
+        )
+
         # Make side bar white
         rectangle_dimensions = (800, 0, 200, 800)
-        pygame.draw.rect(self.window, self.colours["W"], rectangle_dimensions)
+        pygame.draw.rect(
+            self.window, self.colours["grey"], rectangle_dimensions
+        )
 
         # Create button to show help menu
 
-        # Log text of what happens maybe?
+        rectangle_dimensions = (805, 5, 190, 75)
+        pygame.draw.rect(
+            self.window, self.colours["black"], rectangle_dimensions
+        )
+
+        sf_render = sf.render("Instructions", True, self.colours["green"])
+
+        center_sf_render = sf_render.get_rect(
+            center=pygame.Rect(rectangle_dimensions).center
+        )
+
+        self.window.blit(
+            sf_render,
+            (center_sf_render[0], center_sf_render[1]),
+        )
+
+        # Difficulty buttons
+        rectangle_dimensions = (805, 95, 190, 75)
+
+        pygame.draw.rect(
+            self.window, self.colours["green"], rectangle_dimensions
+        )
+
+        if self.checkers.ai.level == 1:
+            sf.set_underline(True)
+            sf_render = sf.render("Easy", True, self.colours["pink"])
+            sf.set_underline(False)
+        else:
+            sf_render = sf.render("Easy", True, self.colours["black"])
+
+        center_sf_render = sf_render.get_rect(
+            center=pygame.Rect(rectangle_dimensions).center
+        )
+
+        self.window.blit(
+            sf_render,
+            (center_sf_render[0], center_sf_render[1]),
+        )
+
+        rectangle_dimensions = (805, 185, 190, 75)
+        pygame.draw.rect(
+            self.window, self.colours["orange"], rectangle_dimensions
+        )
+
+        if self.checkers.ai.level == 2:
+            sf.set_underline(True)
+            sf_render = sf.render("Medium", True, self.colours["pink"])
+            sf.set_underline(False)
+        else:
+            sf_render = sf.render("Medium", True, self.colours["black"])
+
+        center_sf_render = sf_render.get_rect(
+            center=pygame.Rect(rectangle_dimensions).center
+        )
+
+        self.window.blit(
+            sf_render,
+            (center_sf_render[0], center_sf_render[1]),
+        )
+
+        rectangle_dimensions = (805, 275, 190, 75)
+        pygame.draw.rect(self.window, self.colours["R"], rectangle_dimensions)
+
+        if self.checkers.ai.level == 3:
+            sf.set_underline(True)
+            sf_render = sf.render("Hard", True, self.colours["pink"])
+            sf.set_underline(False)
+        else:
+            sf_render = sf.render("Hard", True, self.colours["black"])
+
+        center_sf_render = sf_render.get_rect(
+            center=pygame.Rect(rectangle_dimensions).center
+        )
+
+        self.window.blit(
+            sf_render,
+            (center_sf_render[0], center_sf_render[1]),
+        )
+
+        # Toggle help view
+
+        rectangle_dimensions = (805, 365, 190, 75)
+        pygame.draw.rect(
+            self.window, self.colours["black"], rectangle_dimensions
+        )
+
+        if not self.checkers.show_valid_moves:
+            sf_render = sf.render("Show Help", True, self.colours["green"])
+        else:
+            sf_render = sf.render("Hide Help", True, self.colours["R"])
+
+        center_sf_render = sf_render.get_rect(
+            center=pygame.Rect(rectangle_dimensions).center
+        )
+
+        self.window.blit(
+            sf_render,
+            (center_sf_render[0], center_sf_render[1]),
+        )
 
     @staticmethod
     def convert_x_y_to_row_col(pos):
