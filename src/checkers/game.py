@@ -59,28 +59,29 @@ class Game:
         ]
 
     def calculate_heuristic(self, board: Board):
-        score = 0
-        pieces_scores = [0, 0]
+        scores = [0, 0]
 
         for row in range(8):
             for col in range(8):
                 piece = board.pieces[row][col]
 
                 if piece:
-                    pieces_scores[piece.type] += 200
+                    # Pieces
+                    scores[piece.type] += 2
 
+                    # King
                     if piece.king:
-                        if piece.type == 0:
-                            score -= 500
-                        else:
-                            score += 300
+                        scores[piece.type] += 3
+                        scores[1 if piece.type == 0 else 0] -= 5
 
-                    if piece.type == 1 and row == 0:
-                        score += 75
+                    # Backrow
+                    if (piece.type == 0 and row == 7) or (
+                        piece.type == 1 and row == 0
+                    ):
+                        scores[piece.type] += 3
 
-        score += pieces_scores[0] - pieces_scores[1]
-
-        return score
+        human_score, ai_score = scores
+        return human_score - ai_score
 
     def validate_move(self, piece, piece_location, tile_location, board):
         og_row, og_col = piece_location
