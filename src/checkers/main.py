@@ -64,7 +64,32 @@ def play_game():
                 ):
                     gui.checkers.take_turn(gui.convert_x_y_to_row_col(pos))
                 elif pos[0] > 800:
-                    pass
+                    # Sidebar
+                    print(pos)
+
+                    if pos[0] >= 805 and pos[0] <= 995:
+                        print("h")
+
+                        # Instructions box
+
+                        if pos[1] >= 7 and pos[1] <= 80:
+                            print("Instruction box")
+
+                        # Easy
+                        if pos[1] >= 95 and pos[1] <= 170:
+                            print("Easy")
+
+                        # Medium
+                        if pos[1] >= 185 and pos[1] <= 260:
+                            print("Medium")
+
+                        # Hard
+                        if pos[1] >= 275 and pos[1] <= 350:
+                            print("Hard")
+
+                        # Help
+                        if pos[1] >= 365 and pos[1] <= 440:
+                            print("Help")
 
         gui.update_window()
 
