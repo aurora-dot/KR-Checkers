@@ -1,7 +1,7 @@
 # K&R: Checkers Coursework
 
 ## Requirements
-Please make sure you have these installed:
+Please make sure you have these installed (Ignore if on lab machines):
 - python version `3.6.6` or above
     - Check python version: `python -V` in the Terminal / CMD
 - pip version `21.1.1` or above
@@ -11,12 +11,13 @@ Please make sure you have these installed:
 
 ## How To Run
 - Navigate to the base directory using a Terminal / CMD
-    - `cd Downloads/KR-Checkers`
+    - e.g., `cd Downloads/KR-Checkers`
 - Install the package with pip
     - `python -m pip install .`
     - If the above command gives an error about the Script directory not being on path, copy the returned path to your clipboard
 - Run the program
-    - If the path error is returned, paste the path and append `PlayCheckers` and enter, if no error was given, simply just run `PlayCheckers`
+    - If the path error is returned from previous step, paste the path and append `PlayCheckers` and enter, if no error was given, simply just run `PlayCheckers`
+        - path error for windows as an example: `C:\Users\XXX000\AppData\Roaming\Python\Python36\Scripts\PlayCheckers.exe`
 
 Have fun!
 
