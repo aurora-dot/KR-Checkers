@@ -8,7 +8,6 @@ class instructions_thread(threading.Thread):
 
     def run(self):
         root = tk.Tk()
-        root.geometry("625x175")
         labels = [
             tk.Label(root, text="Rules:"),
             tk.Label(root, text=""),
