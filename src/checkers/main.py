@@ -22,6 +22,8 @@ def play_game():
     gui = Gui(window)
     gui.update_window()
 
+    thread = instructions_thread()
+
     while playing:
         clock.tick(fps)
 
@@ -72,7 +74,6 @@ def play_game():
                         # Instructions
 
                         if pos[1] >= 7 and pos[1] <= 80:
-                            thread = instructions_thread
                             thread.start()
 
                         # Easy
