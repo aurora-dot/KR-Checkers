@@ -81,7 +81,7 @@ class Game:
                         scores[piece.type] += 50
 
         human_score, ai_score = scores
-        return human_score - ai_score
+        return ai_score - human_score
 
     def validate_move(self, piece, piece_location, tile_location, board):
         og_row, og_col = piece_location
