@@ -4,14 +4,14 @@ from math import inf
 
 
 class Ai(Player):
-    depth = 3
-    level = 3
+    depth = 1
+    level = 1
 
     def __init__(self, type, board, game) -> None:
         super().__init__(type, board, game)
 
     def select_piece(self, tile_location):
-        self.started = False
+        self.started = True
 
         result = self.minmax(
             1, copy.deepcopy(self.board), self.depth, -inf, inf
@@ -44,34 +44,33 @@ class Ai(Player):
         if depth == 0 or self.game.finished(board) is not None:
             return self.game.calculate_heuristic(board)
         else:
-
-            new_board = copy.deepcopy(board)
-            self.game.generate_moves_for_board(new_board)
+            self.game.generate_moves_for_board(board)
 
             # Human turn
             if turn == 0:
                 human_moves = [
                     [from_loc, to_loc]
-                    for from_loc, data in new_board.human_move_set.items()
+                    for from_loc, data in board.human_move_set.items()
                     for to_loc in data["moves"]
                 ]
 
-                # print("h: ", human_moves)
-
                 max_score = -inf
                 for move in human_moves:
-                    # print("h move: ", move)
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
 
-                    self.place_piece(
+                    print(move)
+
+                    new_board = copy.deepcopy(board)
+
+                    self.ai_place_piece(
                         (n_row, n_col),
                         new_board,
                         (p_row, p_row, new_board.pieces[p_row][p_col]),
                     )
+
                     score = self.minmax(1, new_board, depth - 1, alpha, beta)
 
-                    new_board = copy.deepcopy(board)
                     max_score = max(score, max_score)
                     alpha = max(alpha, score)
                     if beta <= alpha:
@@ -83,27 +82,25 @@ class Ai(Player):
             elif turn == 1:
                 ai_moves = [
                     [from_loc, to_loc]
-                    for from_loc, data in new_board.ai_move_set.items()
+                    for from_loc, data in board.ai_move_set.items()
                     for to_loc in data["moves"]
                 ]
 
-                # print("a: ", ai_moves)
-
                 min_score = inf
                 for move in ai_moves:
-                    # print("a move: ", move)
-
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
 
-                    self.place_piece(
+                    print(move)
+
+                    new_board = copy.deepcopy(board)
+
+                    self.ai_place_piece(
                         (n_row, n_col),
                         new_board,
                         (p_row, p_row, new_board.pieces[p_row][p_col]),
                     )
                     score = self.minmax(0, new_board, depth - 1, alpha, beta)
-
-                    new_board = copy.deepcopy(board)
                     if score < min_score and self.depth == depth:
                         self.move = move
                     min_score = min(score, min_score)
@@ -112,3 +109,29 @@ class Ai(Player):
                         break
 
                 return min_score
+
+    def ai_place_piece(self, tile_location, board, selected_piece):
+        piece = selected_piece[2]
+        location = selected_piece[0:2]
+
+        # print(piece)
+        # print(piece.moves)
+        # print(piece.king_moves)
+        # print(piece.captures)
+
+        if tile_location in piece.moves:
+            board.move_piece(location, tile_location)
+            if tile_location in piece.king_moves:
+                piece.king = True
+            # if tile_location in piece.captures:
+            #     captured_location = piece.captures[tile_location]
+            #     board.remove_piece(captured_location)
+
+            # Check for jumps here and make them maybe
+
+            self.selected_piece = None
+            self.game.generate_moves_for_board(self.board)
+
+            return True
+
+        return False

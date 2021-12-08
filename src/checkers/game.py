@@ -34,7 +34,7 @@ class Game:
                 tile_location, self.board, player.selected_piece
             )
             if valid:
-                player.selected_piece = None
+                print("yay")
                 self.turn = 0 if self.turn == 1 else 1
 
                 # print("h: ", self.human_move_set)

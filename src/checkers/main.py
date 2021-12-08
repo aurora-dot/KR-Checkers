@@ -2,7 +2,7 @@ import pygame
 from sys import exit
 from .gui import Gui
 
-fps = 60
+fps = 30
 res = (1000, 800)
 window = pygame.display.set_mode(res)
 pygame.display.set_caption("K&R: Checkers!")
@@ -35,7 +35,7 @@ def play_game():
 
         if (
             gui.checkers.turn == gui.checkers.players[1].type
-            and not gui.checkers.players[1].started
+            and gui.checkers.players[1].started
             and gui.checkers.players[1].move
         ):
             gui.checkers.take_turn(gui.checkers.players[1].move[1])

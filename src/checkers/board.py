@@ -48,6 +48,7 @@ class Board:
         self.pieces[piece_row][piece_col] = None
 
     def remove_piece(self, captured_location):
+        print("HERE")
         piece_row, piece_col = captured_location
         piece_type = self.pieces[piece_row][piece_col].type
         self.pieces[piece_row][piece_col] = None

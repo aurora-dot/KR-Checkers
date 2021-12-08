@@ -55,9 +55,13 @@ class Gui:
                     piece_y = (100 * row) + (100 // 2)
 
                     if (
-                        not self.checkers.human.selected_piece
+                        not self.checkers.players[
+                            self.checkers.turn
+                        ].selected_piece
                         or (row, col)
-                        != self.checkers.human.selected_piece[0:2]
+                        != self.checkers.players[
+                            self.checkers.turn
+                        ].selected_piece[0:2]
                     ):
                         # Pink circle outline
                         self.draw_circle(
@@ -67,7 +71,9 @@ class Gui:
                             radius + 4,
                             self.colours["pink"],
                         )
-                    elif (row, col) == self.checkers.human.selected_piece[0:2]:
+                    elif (row, col) == self.checkers.players[
+                        self.checkers.turn
+                    ].selected_piece[0:2]:
                         # Orange circle outline
                         self.draw_circle(
                             self.window,
@@ -107,10 +113,17 @@ class Gui:
 
     def draw_valid_moves(self) -> None:
         if self.checkers.turn == 0:
-            if self.checkers.human.selected_piece:
-                moves = self.checkers.human.selected_piece[2].moves
+            if self.checkers.players[self.checkers.turn].selected_piece:
+                moves = (
+                    self.checkers.players[self.checkers.turn]
+                    .selected_piece[2]
+                    .moves
+                )
             else:
-                moves = self.checkers.board.all_human_moves
+                if self.checkers.turn == 0:
+                    moves = self.checkers.board.all_human_moves
+                else:
+                    moves = self.checkers.board.all_ai_moves
 
             radius = (100 // 2) - 14
             for move in moves:
