@@ -14,6 +14,7 @@ class Gui:
         "orange": (255, 184, 108),
         "green": (80, 250, 123),
         "grey": (68, 71, 90),
+        "purple": (198, 147, 249),
     }
 
     def __init__(self, window) -> None:
@@ -219,7 +220,7 @@ class Gui:
 
         if self.checkers.ai.level == 1:
             sf.set_underline(True)
-            sf_render = sf.render("Easy", True, self.colours["pink"])
+            sf_render = sf.render("Easy", True, self.colours["purple"])
             sf.set_underline(False)
         else:
             sf_render = sf.render("Easy", True, self.colours["black"])
@@ -240,7 +241,7 @@ class Gui:
 
         if self.checkers.ai.level == 2:
             sf.set_underline(True)
-            sf_render = sf.render("Medium", True, self.colours["pink"])
+            sf_render = sf.render("Medium", True, self.colours["purple"])
             sf.set_underline(False)
         else:
             sf_render = sf.render("Medium", True, self.colours["black"])
@@ -259,7 +260,7 @@ class Gui:
 
         if self.checkers.ai.level == 3:
             sf.set_underline(True)
-            sf_render = sf.render("Hard", True, self.colours["pink"])
+            sf_render = sf.render("Hard", True, self.colours["purple"])
             sf.set_underline(False)
         else:
             sf_render = sf.render("Hard", True, self.colours["black"])

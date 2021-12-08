@@ -34,11 +34,11 @@ class Ai(Player):
     def select_level(self, level):
         if level in [1, 2, 3]:
             if level == 1:
-                self.depth = 5
+                self.depth = 1
             elif level == 2:
-                self.depth = 20
+                self.depth = 3
             elif level == 3:
-                self.depth = 50
+                self.depth = 6
             self.level = level
             return True
 

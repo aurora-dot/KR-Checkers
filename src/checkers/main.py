@@ -65,31 +65,30 @@ def play_game():
                     gui.checkers.take_turn(gui.convert_x_y_to_row_col(pos))
                 elif pos[0] > 800:
                     # Sidebar
-                    print(pos)
 
                     if pos[0] >= 805 and pos[0] <= 995:
-                        print("h")
-
-                        # Instructions box
+                        # Instructions
 
                         if pos[1] >= 7 and pos[1] <= 80:
-                            print("Instruction box")
+                            print("Instruction")
 
                         # Easy
                         if pos[1] >= 95 and pos[1] <= 170:
-                            print("Easy")
+                            gui.checkers.ai.select_level(1)
 
                         # Medium
                         if pos[1] >= 185 and pos[1] <= 260:
-                            print("Medium")
+                            gui.checkers.ai.select_level(2)
 
                         # Hard
                         if pos[1] >= 275 and pos[1] <= 350:
-                            print("Hard")
+                            gui.checkers.ai.select_level(3)
 
                         # Help
                         if pos[1] >= 365 and pos[1] <= 440:
-                            print("Help")
+                            gui.checkers.show_valid_moves = (
+                                not gui.checkers.show_valid_moves
+                            )
 
         gui.update_window()
 
