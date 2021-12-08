@@ -29,12 +29,12 @@ class Game:
         elif player.selected_piece[0:2] == tile_location:
             player.selected_piece = None
         else:
-            print(player.selected_piece, tile_location)
+            # print(player.selected_piece, tile_location)
             valid = player.place_piece(
                 tile_location, self.board, player.selected_piece
             )
             if valid:
-                print("yay")
+                # print("yay")
                 self.turn = 0 if self.turn == 1 else 1
 
                 # print("h: ", self.human_move_set)

@@ -13,17 +13,15 @@ class Ai(Player):
     def select_piece(self, tile_location):
         self.started = True
 
-        print(repr(self.board))
-        print(self.board.pieces)
+        # print(repr(self.board))
+        # print(self.board.pieces)
 
         new_board = copy.deepcopy(self.board)
         new_board.pieces = copy.deepcopy(self.board.pieces)
 
-        result = self.minmax(
-            1, copy.deepcopy(new_board), self.depth, -inf, inf
-        )
+        self.minmax(1, copy.deepcopy(new_board), self.depth, -inf, inf)
 
-        print(result)
+        # print(result)
 
         self.selected_piece = (
             self.move[0][0],
@@ -65,7 +63,7 @@ class Ai(Player):
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
 
-                    print(move)
+                    # print(move)
 
                     new_board = copy.deepcopy(self.board)
                     new_board.pieces = copy.deepcopy(self.board.pieces)
@@ -103,7 +101,7 @@ class Ai(Player):
                     p_row, p_col = move[0]
                     n_row, n_col = move[1]
 
-                    print(move)
+                    # print(move)
 
                     new_board = copy.deepcopy(self.board)
                     new_board.pieces = copy.deepcopy(self.board.pieces)
@@ -139,12 +137,12 @@ class Ai(Player):
         # print(piece.captures)
 
         if tile_location in piece.moves:
-            if piece.type == 1 and piece.captures:
-                print("-------")
-                print(location)
-                print(tile_location)
-                print(board)
-                print(board.board[location[0]][location[1]])
+            # if piece.type == 1 and piece.captures:
+            #     print("-------")
+            #     print(location)
+            #     print(tile_location)
+            #     print(board)
+            #     print(board.board[location[0]][location[1]])
             board.move_piece(location, tile_location)
             if tile_location in piece.king_moves:
                 piece.king = True
@@ -152,10 +150,10 @@ class Ai(Player):
 
                 captured_location = piece.captures[tile_location]
                 board.remove_piece(captured_location)
-                if piece.type == 1:
-                    print(captured_location)
-                    print(board)
-                    print("-------")
+                # if piece.type == 1:
+                #     print(captured_location)
+                #     print(board)
+                #     print("-------")
 
             # Check for jumps here and make them maybe
 
