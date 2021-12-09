@@ -6,6 +6,7 @@ from math import inf
 class Ai(Player):
     depth = 1
     level = 1
+    move = None
 
     def __init__(self, type, board, game) -> None:
         super().__init__(type, board, game)

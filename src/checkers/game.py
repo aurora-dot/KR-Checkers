@@ -10,14 +10,12 @@ class Game:
         self.start_new_game()
 
     def start_new_game(self):
-        self.selected_piece = None
         self.turn = 0
         self.board = Board()
         self.human = Human(0, self.board, self)
         self.ai = Ai(1, self.board, self)
         self.players = [self.human, self.ai]
         self.generate_moves_for_board(self.board)
-        self.taken_moves = []
 
     def take_turn(self, tile_location):
         player = self.players[self.turn]

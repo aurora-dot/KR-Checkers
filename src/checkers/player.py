@@ -4,8 +4,6 @@ import abc
 class Player:
     selected_piece = None
     started = False
-    move = None
-    taken_moves = []
 
     def __init__(self, type, board, game) -> None:
         self.type = type
@@ -31,7 +29,6 @@ class Player:
 
             # Check for jumps here and make them maybe
 
-            self.game.taken_moves.append((location, tile_location))
             self.selected_piece = None
             self.game.generate_moves_for_board(board)
 
